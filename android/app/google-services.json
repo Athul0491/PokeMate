@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "716559292323",
+    "project_id": "pokemate-e8a06",
+    "storage_bucket": "pokemate-e8a06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716559292323:android:88766398d9d66fdfb62c16",
+        "android_client_info": {
+          "package_name": "com.aadi.pokemate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716559292323-m8hsnoq9f2i7ejgg24p4eoeunhk67ebn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aadi.pokemate",
+            "certificate_hash": "fa0585efe2995d3314c49360bb553f762c74e293"
+          }
+        },
+        {
+          "client_id": "716559292323-58va0rks4ntm9a3o3i9eriea0hlake2m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADZoWV7TpWsUBt-7IOxFuTS_KAiTBFxI4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716559292323-58va0rks4ntm9a3o3i9eriea0hlake2m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
