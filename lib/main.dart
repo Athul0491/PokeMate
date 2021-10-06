@@ -1,11 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokemate/app.dart';
 import 'package:pokemate/shared/error_screen.dart';
 import 'package:pokemate/shared/loading.dart';
-import 'package:pokemate/views/home_screen.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 
 void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.transformer = sequential<dynamic>();
   runApp(const FlutterFireInit());
 }
 
@@ -27,7 +30,7 @@ class _FlutterFireInitState extends State<FlutterFireInit> {
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
-          return const SomethingWentWrong();
+          return const MaterialApp(home: SomethingWentWrong());
         }
 
         // Once complete, show your application
@@ -36,26 +39,8 @@ class _FlutterFireInitState extends State<FlutterFireInit> {
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
-        return const Loading();
+        return const MaterialApp(home: Loading());
       },
-    );
-  }
-}
-
-class App extends StatefulWidget {
-  const App({Key? key}) : super(key: key);
-
-  @override
-  _AppState createState() => _AppState();
-}
-
-class _AppState extends State<App> {
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: SafeArea(
-        child: HomeScreen()
-      ),
     );
   }
 }
