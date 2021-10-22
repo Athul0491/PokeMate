@@ -6,13 +6,16 @@ import 'package:pokemate/views/home_screen.dart';
 
 class Wrapper extends StatelessWidget {
   final AppState state;
+
   const Wrapper({Key? key, required this.state}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (state is Uninitialized) {
       return const Loading();
-    } else if (state is Unauthenticated) {
+    } else if (state is Unauthenticated ||
+        state is LoginPageStates ||
+        state is SignupPageStates) {
       return const WelcomeScreen();
     } else if (state is Authenticated) {
       return const HomeScreen();

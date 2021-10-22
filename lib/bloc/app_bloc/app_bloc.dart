@@ -56,7 +56,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   // When the User Logs in
   FutureOr<void> _onLoginUser(LoginUser event, Emitter<AppState> emit) async {
-    emit(LoginState.loading);
+    emit(LoginPageStates.loading);
     try {
       // Login using email and password
       userData = await _authRepository.logInWithCredentials(
@@ -75,18 +75,18 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       }
     } on Exception catch (e) {
       if (e is UserNotFoundException) {
-        emit(LoginState.noUserFound);
+        emit(LoginPageStates.noUserFound);
       } else if (e is WrongPasswordException) {
-        emit(LoginState.wrongPassword);
+        emit(LoginPageStates.wrongPassword);
       } else {
-        emit(LoginState.somethingWentWrong);
+        emit(LoginPageStates.somethingWentWrong);
       }
     }
   }
 
   // When the User Signs up
   FutureOr<void> _onSignupUser(SignupUser event, Emitter<AppState> emit) async {
-    emit(SignupState.loading);
+    emit(SignupPageStates.loading);
     try {
       // Signup using email and password
       userData = await _authRepository.signUpUsingCredentials(
@@ -104,9 +104,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       emit(Authenticated(userData: userData));
     } on Exception catch (e) {
       if (e is EmailAlreadyInUseException) {
-        emit(SignupState.userAlreadyExists);
+        emit(SignupPageStates.userAlreadyExists);
       } else {
-        emit(SignupState.somethingWentWrong);
+        emit(SignupPageStates.somethingWentWrong);
       }
     }
   }
