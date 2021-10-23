@@ -55,43 +55,83 @@ class ErrorOccurred extends AppState {
   List<Object?> get props => [toString()];
 }
 
-class LoginPageStates extends AppState {
+class LoginPageState extends AppState {
   final String message;
 
-  const LoginPageStates({required this.message});
+  const LoginPageState({required this.message});
 
-  static LoginPageStates loading = const LoginPageStates(message: 'Loading');
+  static LoginPageState loading = const LoginPageState(message: 'Loading');
 
-  static LoginPageStates success = const LoginPageStates(message: 'Successful');
+  static LoginPageState success = const LoginPageState(message: 'Successful');
 
-  static LoginPageStates noUserFound =
-      const LoginPageStates(message: 'No user found for that email');
+  static LoginPageState noUserFound =
+      const LoginPageState(message: 'No user found for that email');
 
-  static LoginPageStates wrongPassword =
-      const LoginPageStates(message: 'Wrong Password provided for that user');
+  static LoginPageState wrongPassword =
+      const LoginPageState(message: 'Wrong Password provided for that user');
 
-  static LoginPageStates somethingWentWrong =
-      const LoginPageStates(message: 'Something went wrong, Please try again');
+  static LoginPageState somethingWentWrong =
+      const LoginPageState(message: 'Something went wrong, Please try again');
 
   @override
   List<Object?> get props => [message];
 }
 
-class SignupPageStates extends AppState {
+class EmailInputState extends AppState {
+  final EmailStatus emailStatus;
+
+  const EmailInputState({required this.emailStatus});
+
+  @override
+  List<Object?> get props => [emailStatus];
+}
+
+enum EmailStatus {
+  loading,
+  valid,
+  invalid,
+}
+
+class SignupPageState extends AppState {
   final String message;
 
-  const SignupPageStates({required this.message});
+  const SignupPageState({required this.message});
 
-  static SignupPageStates loading = const SignupPageStates(message: 'Loading');
+  static SignupPageState loading = const SignupPageState(message: 'Loading');
 
-  static SignupPageStates success = const SignupPageStates(message: 'Successful');
+  static SignupPageState success = const SignupPageState(message: 'Successful');
 
-  static SignupPageStates userAlreadyExists =
-      const SignupPageStates(message: 'Email is already in use');
+  static SignupPageState userAlreadyExists =
+      const SignupPageState(message: 'Email is already in use');
 
-  static SignupPageStates somethingWentWrong =
-      const SignupPageStates(message: 'Something went wrong, Please try again');
+  static SignupPageState somethingWentWrong =
+      const SignupPageState(message: 'Something went wrong, Please try again');
 
   @override
   List<Object?> get props => [message];
+}
+
+class DeleteAccountPageState extends AppState {
+  final String message;
+
+  const DeleteAccountPageState({required this.message});
+
+  static DeleteAccountPageState loading =
+  const DeleteAccountPageState(message: 'Loading');
+
+  static DeleteAccountPageState invalidCredentials =
+  const DeleteAccountPageState(message: 'Invalid Credentials!');
+
+  static DeleteAccountPageState somethingWentWrong =
+  const DeleteAccountPageState(
+      message: 'Something went wrong, Please try again');
+
+  static DeleteAccountPageState success =
+  const DeleteAccountPageState(message: 'Success!');
+
+  @override
+  String toString() => 'DeleteAccountPageState';
+
+  @override
+  List<Object?> get props => [toString()+message];
 }

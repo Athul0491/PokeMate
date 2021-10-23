@@ -14,8 +14,9 @@ class Wrapper extends StatelessWidget {
     if (state is Uninitialized) {
       return const Loading();
     } else if (state is Unauthenticated ||
-        state is LoginPageStates ||
-        state is SignupPageStates) {
+        state is LoginPageState ||
+        state is SignupPageState ||
+        state is EmailInputState) {
       return const WelcomeScreen();
     } else if (state is Authenticated) {
       return const HomeScreen();

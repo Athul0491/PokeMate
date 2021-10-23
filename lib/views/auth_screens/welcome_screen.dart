@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokemate/themes/theme_notifiers.dart';
+import 'package:pokemate/views/auth_screens/get_started_page.dart';
 import 'package:pokemate/views/auth_screens/login_screen.dart';
 import 'package:pokemate/views/auth_screens/signup_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,7 +62,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const SignupPage()));
+                    MaterialPageRoute(builder: (context) => const GetStartedPage()));
               },
             ),
           ],

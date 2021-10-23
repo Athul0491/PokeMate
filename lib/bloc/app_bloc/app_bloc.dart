@@ -13,6 +13,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final AuthRepository _authRepository;
   late DatabaseRepository _databaseRepository;
   late UserData userData;
+  // late DatabaseBloc databaseBloc;
 
   AppBloc({required authRepository})
       : _authRepository = authRepository,
@@ -21,10 +22,26 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     _databaseRepository = DatabaseRepository(uid: userData.uid);
     on<AppStarted>(_onAppStarted);
     on<LoginUser>(_onLoginUser);
+    on<CheckEmailStatus>(_onCheckEmailStatus);
     on<SignupUser>(_onSignupUser);
     on<UpdateUserData>(_onUpdateUserData);
     on<LoggedOut>(_onLoggedOut);
   }
+
+  // void updateDatabaseBloc() {
+  //   print('isSame?');
+  //   print(databaseBloc ==
+  //       DatabaseBloc(
+  //         userData: userData,
+  //         databaseRepository: databaseRepository,
+  //         encryptionRepository: encryptionRepository,
+  //       ));
+  //   databaseBloc = DatabaseBloc(
+  //     userData: userData,
+  //     databaseRepository: databaseRepository,
+  //     encryptionRepository: encryptionRepository,
+  //   );
+  // }
 
   // When the App Starts
   FutureOr<void> _onAppStarted(AppStarted event, Emitter<AppState> emit) async {
@@ -56,11 +73,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   // When the User Logs in
   FutureOr<void> _onLoginUser(LoginUser event, Emitter<AppState> emit) async {
-    emit(LoginPageStates.loading);
+    emit(LoginPageState.loading);
     try {
       // Login using email and password
       userData = await _authRepository.logInWithCredentials(
           event.email, event.password);
+
       // Update DatabaseRepository
       _databaseRepository = DatabaseRepository(uid: userData.uid);
       // After login fetch rest of the user details from database
@@ -74,19 +92,39 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         emit(const ErrorOccurred(error: 'Failed to fetch details!'));
       }
     } on Exception catch (e) {
+      print(e);
       if (e is UserNotFoundException) {
-        emit(LoginPageStates.noUserFound);
+        emit(LoginPageState.noUserFound);
       } else if (e is WrongPasswordException) {
-        emit(LoginPageStates.wrongPassword);
+        emit(LoginPageState.wrongPassword);
       } else {
-        emit(LoginPageStates.somethingWentWrong);
+        emit(LoginPageState.somethingWentWrong);
+      }
+    }
+  }
+
+  Future<void> _onCheckEmailStatus(
+      CheckEmailStatus event, Emitter<AppState> emit) async {
+    // emit loading
+    emit(const EmailInputState(emailStatus: EmailStatus.loading));
+    try {
+      // Try to login with the email provided with null as password
+      // This will throw an exception
+      await _authRepository.logInWithCredentials(event.email, 'null');
+    } on Exception catch (e) {
+      if (e is UserNotFoundException) {
+        // This means there was no existing user found for that email
+        // Hence, the email is valid
+        emit(const EmailInputState(emailStatus: EmailStatus.valid));
+      } else {
+        emit(const EmailInputState(emailStatus: EmailStatus.invalid));
       }
     }
   }
 
   // When the User Signs up
   FutureOr<void> _onSignupUser(SignupUser event, Emitter<AppState> emit) async {
-    emit(SignupPageStates.loading);
+    emit(SignupPageState.loading);
     try {
       // Signup using email and password
       userData = await _authRepository.signUpUsingCredentials(
@@ -104,9 +142,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       emit(Authenticated(userData: userData));
     } on Exception catch (e) {
       if (e is EmailAlreadyInUseException) {
-        emit(SignupPageStates.userAlreadyExists);
+        emit(SignupPageState.userAlreadyExists);
       } else {
-        emit(SignupPageStates.somethingWentWrong);
+        emit(SignupPageState.somethingWentWrong);
       }
     }
   }
@@ -118,5 +156,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   FutureOr<void> _onLoggedOut(LoggedOut event, Emitter<AppState> emit) async {
     emit(Uninitialized(userData: UserData.empty));
+    userData = UserData.empty;
+    _databaseRepository = DatabaseRepository(uid: userData.uid);
+    // updateDatabaseBloc();
+    await _authRepository.signOut();
+    emit(Unauthenticated(userData: userData));
   }
 }
