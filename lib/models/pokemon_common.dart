@@ -5,15 +5,16 @@ class PokemonDB {
   int cp;
   PokemonType type1;
   PokemonType type2;
+  String imageURL;
 
-  PokemonDB({
-    this.id = '',
-    this.name = '',
-    this.ivs = const [0, 0, 0],
-    this.cp = 0,
-    this.type1 = PokemonType.normal,
-    this.type2 = PokemonType.normal,
-  });
+  PokemonDB(
+      {this.id = '',
+      this.name = '',
+      this.ivs = const [0, 0, 0],
+      this.cp = 0,
+      this.type1 = PokemonType.normal,
+      this.type2 = PokemonType.normal,
+      this.imageURL = ''});
 
   PokemonDB.fromJson(Map<String, Object?> json, String id)
       : this(
@@ -23,6 +24,7 @@ class PokemonDB {
           cp: json['cp']! as int,
           type1: PokemonType.values[(json['type1'] as int)],
           type2: PokemonType.values[(json['type2'] as int)],
+          imageURL: json['imageURL']! as String,
         );
 
   Map<String, Object?> toJson() {
@@ -32,11 +34,12 @@ class PokemonDB {
       'cp': cp,
       'type1': type1,
       'type2': type2,
+      'imageURL': imageURL,
     };
   }
 
   @override
-  String toString(){
+  String toString() {
     return '$name, IVS: $ivs, CP$cp, $type1-$type2';
   }
 }
@@ -71,3 +74,5 @@ enum PokemonType {
   steel,
   fairy,
 }
+
+enum InputType { gallery, manual }

@@ -18,6 +18,16 @@ class HomePageState extends DatabaseState {
   List<Object?> get props => throw UnimplementedError();
 }
 
+class PVPRaterFormState extends DatabaseState {
+  final String name;
+  final List<int> ivs;
+
+  const PVPRaterFormState({this.name = '', this.ivs = const [0,0,0]});
+
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}
+
 class PVPRaterPageState extends DatabaseState {
   @override
   // TODO: implement props
