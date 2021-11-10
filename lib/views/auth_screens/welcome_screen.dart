@@ -22,8 +22,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         padding: EdgeInsets.symmetric(horizontal: 25.w),
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(
-                  'assets/${colors.isDarkMode ? 'dark' : 'light'}_bg.png'),
+              image: AssetImage(colors.bgImage),
               fit: BoxFit.cover),
         ),
         height: MediaQuery.of(context).size.height,

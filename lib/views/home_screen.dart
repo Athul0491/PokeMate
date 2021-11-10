@@ -1,8 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pokemate/bloc/app_bloc/app_bloc.dart';
 import 'package:pokemate/bloc/app_bloc/app_bloc_files.dart';
@@ -10,6 +11,7 @@ import 'package:pokemate/models/pokemon_common.dart';
 import 'package:pokemate/themes/theme_notifiers.dart';
 import 'package:pokemate/views/pvp_iv/pvp_iv_form.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pokemate/views/wild_pokemon/wild_pokemon_form.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,9 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: EdgeInsets.symmetric(horizontal: 25.w),
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(
-                  'assets/${colors.isDarkMode ? 'dark' : 'light'}_bg.png'),
-              fit: BoxFit.cover),
+              image: AssetImage(colors.bgImage), fit: BoxFit.cover),
         ),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -45,19 +45,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(primary: colors.accent),
               child: Text(
-                'PVP IV Rater',
+                'PVP Rater',
                 style: TextStyle(
                   fontSize: 20,
                   color: colors.onAccent,
                 ),
               ),
               onPressed: () async {
-                dynamic res = await showModalBottomSheet(
+                await showModalBottomSheet(
                   context: context,
                   barrierColor: Colors.black.withOpacity(0.25),
                   backgroundColor: Colors.transparent,
                   builder: (context) {
-                    return _buildBottomCard();
+                    return _buildBottomCard('PVPRater');
                   },
                 );
               },
@@ -71,8 +71,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: colors.onAccent,
                 ),
               ),
-              onPressed: () {
-                context.read<AppBloc>().add(LoggedOut());
+              onPressed: () async {
+                await showModalBottomSheet(
+                  context: context,
+                  barrierColor: Colors.black.withOpacity(0.25),
+                  backgroundColor: Colors.transparent,
+                  builder: (context) {
+                    return _buildBottomCard('WildPokemon');
+                  },
+                );
               },
             ),
             ElevatedButton(
@@ -84,8 +91,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: colors.onAccent,
                 ),
               ),
-              onPressed: () {
-                context.read<AppBloc>().add(LoggedOut());
+              onPressed: () async {
+                Client _client = Client();
+                Response response = await _client.get(Uri.https(
+                  'pokemate01.herokuapp.com',
+                  '/api/pvp',
+                  {'id': '6'},
+                ));
+                print(response.body);
+                // Response response = await _client.get(Uri.https(
+                //   'pokemate01.herokuapp.com',
+                //   '/api/raid',
+                // ));
+                if(response.statusCode==200){
+                  var data = jsonDecode(response.body);
+                  print(data);
+                }
+
               },
             ),
             ElevatedButton(
@@ -118,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Widget _buildBottomCard() {
+  Widget _buildBottomCard(String targetPage) {
     return Card(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -132,10 +154,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => PVPRaterForm(
+                      builder: (context) => targetPage == 'PVPRater'
+                          ? PVPRaterForm(
                               inputType: InputType.gallery,
                               image: image,
-                            )));
+                            )
+                          : WildPokemonForm(
+                              inputType: InputType.gallery,
+                              image: image,
+                            ),
+                    ));
               } else {
                 Navigator.pop(context);
               }

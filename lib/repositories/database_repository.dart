@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pokemate/models/pokemon_common.dart';
+import 'package:pokemate/models/pokemon_db.dart';
 import 'package:pokemate/models/user.dart';
 
 class DatabaseRepository {

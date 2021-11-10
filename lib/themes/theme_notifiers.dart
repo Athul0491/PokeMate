@@ -31,31 +31,33 @@ class ThemeNotifier with ChangeNotifier {
   Color get onAccent =>
       isDarkMode ? const Color(0xFFFFFFFF) : const Color(0xFFFFFFFF);
 
+  String get bgImage =>
+      isDarkMode ? 'assets/dark_bg.png' : 'assets/light_bg.png';
+
   ThemeNotifier(this.isDarkMode);
 
   bool get isDark => isDarkMode;
 
   ThemeData getTheme(BuildContext context) {
     return ThemeData.from(
-      textTheme: Theme
-          .of(context)
-          .textTheme
-          .apply(
-        fontFamily: 'Poppins',
-        displayColor: t1,
-        bodyColor: t1,
-      ),
-      colorScheme: isDarkMode ? const ColorScheme.dark().copyWith(
-        primary: accent,
-        onPrimary: onAccent,
-        background: bg,
-        surface: card,
-      ) : const ColorScheme.light().copyWith(
-        primary: accent,
-        onPrimary: t1,
-        background: bg,
-        surface: card,
-      ),
+      textTheme: Theme.of(context).textTheme.apply(
+            fontFamily: 'Poppins',
+            displayColor: t1,
+            bodyColor: t1,
+          ),
+      colorScheme: isDarkMode
+          ? const ColorScheme.dark().copyWith(
+              primary: accent,
+              onPrimary: onAccent,
+              background: bg,
+              surface: card,
+            )
+          : const ColorScheme.light().copyWith(
+              primary: accent,
+              onPrimary: t1,
+              background: bg,
+              surface: card,
+            ),
     );
   }
 

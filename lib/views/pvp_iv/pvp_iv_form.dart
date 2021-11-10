@@ -1,11 +1,13 @@
 import 'dart:io';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
 import 'package:pokemate/bloc/database_bloc/database_bloc.dart';
 import 'package:pokemate/bloc/database_bloc/database_bloc_files.dart';
 import 'package:pokemate/models/pokemon_common.dart';
 import 'package:pokemate/shared/loading.dart';
+import 'package:pokemate/shared/shared_methods.dart';
 import 'package:pokemate/themes/theme_notifiers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -24,7 +26,8 @@ class _PVPRaterFormState extends State<PVPRaterForm> {
   File? _image;
   String tempMessage = '';
   String _name = '';
-  List<int> _ivs = [0,0,0];
+  List<int> _ivs = [0, 0, 0];
+  String _id = '';
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -32,8 +35,8 @@ class _PVPRaterFormState extends State<PVPRaterForm> {
   void initState() {
     super.initState();
     _image = widget.image;
-    if(_image != null){
-      context.read<DatabaseBloc>().add(GetPVPIVs(image: _image!));
+    if (_image != null) {
+      context.read<DatabaseBloc>().add(GetPVPInfoFromImage(image: _image!));
     }
   }
 
@@ -47,26 +50,29 @@ class _PVPRaterFormState extends State<PVPRaterForm> {
           padding: EdgeInsets.symmetric(horizontal: 25.w),
           decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(
-                    'assets/${colors.isDarkMode ? 'dark' : 'light'}_bg.png'),
-                fit: BoxFit.cover),
+                image: AssetImage(colors.bgImage), fit: BoxFit.cover),
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: BlocConsumer<DatabaseBloc, DatabaseState>(
-            listener: (context, state){
-              if(state is Fetching){
-                tempMessage = 'Loading';
-              }
-              if(state is PVPRaterFormState){
-                tempMessage = '${state.ivs[0]}/${state.ivs[1]}/${state.ivs[2]}';
+            listener: (context, state) async {
+              if (state is PVPRaterFormState) {
                 _ivs = state.ivs;
                 _name = state.name;
+                int startTime = DateTime.now().millisecondsSinceEpoch;
+                String data = await DefaultAssetBundle.of(context)
+                    .loadString("assets/pokemon.json");
+                final jsonResult = jsonDecode(data);
+                print('_' + _name + '_');
+                _id = jsonResult[_name.toLowerCase()]['name'].toString();
+                int endTime = DateTime.now().millisecondsSinceEpoch;
+                print("Loading took ${endTime - startTime}ms");
+                print(_id);
               }
             },
             builder: (context, state) {
-              if (state is Fetching){
-                return const Loading();
+              if (state is Fetching) {
+                return const Center(child: LoadingSmall(size: 100));
               }
               return Form(
                 key: _formKey,
@@ -88,10 +94,37 @@ class _PVPRaterFormState extends State<PVPRaterForm> {
                           color: colors.onAccent,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        Client _client = Client();
+                        // Response response = await _client.get(
+                        //     Uri.https("pokemate01.herokuapp.com","/api/ultra-league", {
+                        //       'Pokemon': 'stunfisk'
+                        //     })
+                        // );
+                        Response response = await _client.get(Uri.https(
+                          "pokemate01.herokuapp.com",
+                          "/api/pvp",
+                          {
+                            'name': 'Sylveon'.capitalize(),
+                            'attack': '0',
+                            'defence': '14',
+                            'hp': '14',
+                            'league': '0',
+                          },
+                        ));
+                        Map data = jsonDecode(response.body);
+                        print(data);
+                      },
                     ),
                     Text(
-                      tempMessage,
+                      _ivs.toString(),
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: colors.t1,
+                      ),
+                    ),
+                    Text(
+                      _name,
                       style: TextStyle(
                         fontSize: 30,
                         color: colors.t1,
@@ -100,7 +133,7 @@ class _PVPRaterFormState extends State<PVPRaterForm> {
                   ],
                 ),
               );
-            }
+            },
           ),
         ),
       ),

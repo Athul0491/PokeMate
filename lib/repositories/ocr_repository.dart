@@ -1,63 +1,79 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:flutter_tesseract_ocr/flutter_tesseract_ocr.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
 
-
-class OCRRepository{
-
+class OCRRepository {
   // Image Preprocessing for OCR
-  Future<img.Image?> processImage(XFile image) async {
-    final path = image.path;
+  static Future<File> processImage(String path) async {
     final bytes = await File(path).readAsBytes();
     img.Image? pickImage = img.decodeImage(bytes);
     pickImage = img.grayscale(pickImage!);
     pickImage = img.noise(pickImage, 1);
     pickImage = img.contrast(pickImage, 132);
-    return pickImage;
+    File file = File(path);
+    if (pickImage != null) {
+      file.writeAsBytesSync(img.encodePng(pickImage));
+    }
+    return file;
   }
 
-  // Using TesseractOCR to extract name
-  Future<String> runOCR(String path) async {
-    String name = '';
+  void writeImage(File file) {}
+
+  // Using TesseractOCR to extract name for PVP Rater
+  Future<String> extractPokemonName(String path) async {
     String extractText = await FlutterTesseractOcr.extractText(path);
     extractText = extractText.replaceAll("\n", " ");
-    name = extractName(extractText);
+    var list = extractText.split(' ');
+    String name = list[list.indexOf('This') + 1];
     return name;
   }
 
-  String extractName(String text){
-
-    return text;
+  // Using TesseractOCR to extract name and CP for Wild Pokemon
+  Future<Map<String, dynamic>> extractNameAndCP(String path) async {
+    String extractText = await FlutterTesseractOcr.extractText(path);
+    extractText = extractText.replaceAll("\n", " ");
+    print(extractText);
+    return extractNameAndCPFromText(extractText);
   }
 
-  String cpExtract(String text) {
-    List boi = text.split(' ');
-    int slashIndex = boi.indexOf('/');
-    if (slashIndex >= 0) {
-      String beforeSlash = boi[slashIndex - 1];
-      String before = '';
-      if (boi.contains('/')) {
-        before = beforeSlash;
-      }
-      String string = '';
-      final regex = RegExp(r'(?:cp.*)');
-      for (String str in boi) {
-        bool match = regex.hasMatch(str);
-        if (match == true) {
-          final regex2 = RegExp(r'(?=.*[0-9])');
-          match = regex2.hasMatch(str);
-          print('$str');
-          string = str;
+  Map<String, dynamic> extractNameAndCPFromText(String text) {
+    List textList = text.split(' ');
+    final cpRegex = RegExp(r'(?:cp.*)');
+    for (String str in textList) {
+      if (cpRegex.hasMatch(str)) {
+        final numRegex = RegExp(r'(?=.*[0-9])');
+        if (numRegex.hasMatch(str)) {
+          Map<String, dynamic> data = {
+            'cp': str.substring(2),
+            'name': textList[textList.indexOf(str) - 2],
+          };
+          return data;
         }
       }
-      print(before);
-      return before + ' ' + string;
+    }
+    return {};
+  }
+
+  String extractCPFromTextOld(String text) {
+    List textList = text.split(' ');
+    if (textList.contains('/')) {
+      int slashIndex = textList.indexOf('/');
+      if (slashIndex > 0) {
+        String name = textList[slashIndex - 1];
+        String cp = '';
+        final cpRegex = RegExp(r'(?:cp.*)');
+        for (String str in textList) {
+          if (cpRegex.hasMatch(str)) {
+            final numRegex = RegExp(r'(?=.*[0-9])');
+            if (numRegex.hasMatch(str)) {
+              cp = str;
+            }
+          }
+        }
+        print(name);
+        return name + ' ' + cp;
+      }
     }
     return 'Does not exist';
   }
-
-
-
 }

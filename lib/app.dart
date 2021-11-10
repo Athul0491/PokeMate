@@ -4,10 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pokemate/bloc/app_bloc/app_bloc.dart';
 import 'package:pokemate/bloc/app_bloc/app_bloc_files.dart';
 import 'package:pokemate/bloc/database_bloc/database_bloc.dart';
+import 'package:pokemate/models/pokemon_common.dart';
 import 'package:pokemate/models/user.dart';
 import 'package:pokemate/repositories/auth_repository.dart';
 import 'package:pokemate/repositories/database_repository.dart';
 import 'package:pokemate/shared/error_screen.dart';
+import 'package:pokemate/shared/loading.dart';
 import 'package:pokemate/themes/theme_notifiers.dart';
 import 'package:pokemate/wrapper.dart';
 import 'package:provider/provider.dart';
@@ -31,8 +33,13 @@ class _AppState extends State<App> {
           appBloc.add(AppStarted());
           return appBloc;
         },
-        child: Builder(
-          builder: (context) {
+        child: FutureBuilder(
+          // To load the pokemon.json file and passing it to bloc
+          future: DefaultAssetBundle.of(context).loadString("assets/pokemon.json"),
+          builder: (context, snapshot) {
+            if(snapshot.connectionState!=ConnectionState.done){
+              return const MaterialApp(home: Loading());
+            }
             return BlocBuilder<AppBloc, AppState>(
               builder: (context, state) {
                 // TODO: BlocProvider for DatabaseBloc
@@ -42,12 +49,13 @@ class _AppState extends State<App> {
                     return DatabaseBloc(
                         userData: userData,
                         databaseRepository:
-                            DatabaseRepository(uid: userData.uid));
+                            DatabaseRepository(uid: userData.uid),
+                        pokemonJSON: PokemonJSON(context, snapshot.data as String),
+                    );
                   },
                   child: ScreenUtilInit(
                     designSize: const Size(414, 896),
                     builder: () {
-                      final colors = context.read<ThemeNotifier>();
                       return Consumer<ThemeNotifier>(
                         builder: (context, colors, child) {
                           return MaterialApp(

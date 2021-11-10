@@ -54,11 +54,9 @@ class _SignupPageState extends State<SignupPage> {
         return SafeArea(
           child: Scaffold(
             body: Container(
-              padding: EdgeInsets.symmetric(horizontal: 25.w),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(
-                      'assets/${colors.isDarkMode ? 'dark' : 'light'}_bg.png'),
+                  image: AssetImage(colors.bgImage),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -66,103 +64,133 @@ class _SignupPageState extends State<SignupPage> {
               width: MediaQuery.of(context).size.width,
               child: Form(
                 key: _formKey,
-                child: Column(
-                  children: [
-                    const Text(
-                      'Signup',
-                      style: TextStyle(
-                        fontSize: 30,
-                      ),
-                    ),
-                    SizedBox(height: 20.w),
-                    Stack(
-                      children: [
-                        TextFormField(
-                          decoration: emailStatus == EmailStatus.valid
-                              ? customInputDecoration(
-                                      context: context, labelText: 'Email')
-                                  .copyWith(
-                                  enabledBorder: greenBorder,
-                                  focusedBorder: greenBorder,
-                                )
-                              : customInputDecoration(
-                                  context: context, labelText: 'Email'),
-                          style: formTextStyle(colors),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your email';
-                            }
-                            if (!validateEmail(email)) {
-                              return 'Invalid email format';
-                            }
-                            if (emailStatus == EmailStatus.invalid) {
-                              return 'This email is already taken!';
-                            }
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              email = value;
-                            });
-                            if (value.isNotEmpty && validateEmail(email)) {
-                              context
-                                  .read<AppBloc>()
-                                  .add(CheckEmailStatus(email: value));
-                            } else {
-                              setState(() {
-                                emailStatus = EmailStatus.invalid;
-                              });
-                            }
-                          },
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(right: 15.w),
-                          height: 55.w,
-                          alignment: Alignment.centerRight,
-                          child: emailStatus == EmailStatus.loading
-                              ? const CircularProgressIndicator()
-                              : emailStatus == EmailStatus.valid
-                                  ? Icon(
-                                      Icons.check,
-                                      size: 30.w,
-                                      color: Colors.green,
-                                    )
-                                  : Icon(
-                                      Icons.close,
-                                      size: 30.w,
-                                      color: email == ''
-                                          ? Colors.transparent
-                                          : Colors.red,
-                                    ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 30.w),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: colors.accent),
-                      child: Text(
-                        'Signup',
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 25.w),
+                      const CustomBackButton(),
+                      SizedBox(height: 75.h),
+                      Text(
+                        'Welcome to,',
                         style: TextStyle(
-                          fontSize: 20,
-                          color: colors.onAccent,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w300,
+                          color: colors.t2,
+                          height: 0.9,
                         ),
                       ),
-                      onPressed: () {
-                        if (!_formKey.currentState!.validate()) {
-                          return;
-                        }
-                        _formKey.currentState?.save();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            showCustomSnackBar(context, stateMessage));
-                        BlocProvider.of<AppBloc>(context).add(SignupUser(
-                          email: email,
-                          password: password,
-                          name: widget.name,
-                          age: widget.age,
-                        ));
-                      },
-                    ),
-                  ],
+                      Text(
+                        'PokeMate',
+                        style: TextStyle(
+                          height: 1.25,
+                          fontSize: 45,
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                      ),
+                      SizedBox(height: 60.h),
+                      Text(
+                        'Create an account',
+                        style: TextStyle(
+                          height: 1.25.w,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                      ),
+                      SizedBox(height: 25.h),
+                      Stack(
+                        children: [
+                          TextFormField(
+                            decoration: emailStatus == EmailStatus.valid
+                                ? customInputDecoration(
+                                        context: context, labelText: 'Email')
+                                    .copyWith(
+                                    enabledBorder: greenBorder,
+                                    focusedBorder: greenBorder,
+                                  )
+                                : customInputDecoration(
+                                    context: context, labelText: 'Email'),
+                            style: formTextStyle(colors),
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email';
+                              }
+                              if (!validateEmail(email)) {
+                                return 'Invalid email format';
+                              }
+                              if (emailStatus == EmailStatus.invalid) {
+                                return 'This email is already taken!';
+                              }
+                            },
+                            onChanged: (value) {
+                              setState(() {
+                                email = value;
+                              });
+                              if (value.isNotEmpty && validateEmail(email)) {
+                                context
+                                    .read<AppBloc>()
+                                    .add(CheckEmailStatus(email: value));
+                              } else {
+                                setState(() {
+                                  emailStatus = EmailStatus.invalid;
+                                });
+                              }
+                            },
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(right: 15.w),
+                            height: 55.w,
+                            alignment: Alignment.centerRight,
+                            child: emailStatus == EmailStatus.loading
+                                ? const CircularProgressIndicator()
+                                : emailStatus == EmailStatus.valid
+                                    ? Icon(
+                                        Icons.check,
+                                        size: 30.w,
+                                        color: Colors.green,
+                                      )
+                                    : Icon(
+                                        Icons.close,
+                                        size: 30.w,
+                                        color: email == ''
+                                            ? Colors.transparent
+                                            : Colors.red,
+                                      ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 30.w),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: colors.accent),
+                        child: Text(
+                          'Signup',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: colors.onAccent,
+                          ),
+                        ),
+                        onPressed: () {
+                          if (!_formKey.currentState!.validate()) {
+                            return;
+                          }
+                          _formKey.currentState?.save();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              showCustomSnackBar(context, stateMessage));
+                          BlocProvider.of<AppBloc>(context).add(SignupUser(
+                            email: email,
+                            password: password,
+                            name: widget.name,
+                            age: widget.age,
+                          ));
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

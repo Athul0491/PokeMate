@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:pokemate/themes/theme_notifiers.dart';
+import 'package:provider/provider.dart';
 
 class Loading extends StatelessWidget {
   const Loading({Key? key}) : super(key: key);
@@ -10,7 +12,7 @@ class Loading extends StatelessWidget {
       body: Center(
         child: SpinKitCircle(
           size: 100,
-          color: Theme.of(context).primaryColor,
+          color: context.read<ThemeNotifier>().accent,
         ),
       ),
     );
@@ -30,7 +32,7 @@ class LoadingSmall extends StatelessWidget {
       padding: const EdgeInsets.all(5),
       child: SpinKitCircle(
         size: size,
-        color: Theme.of(context).primaryColor,
+        color: context.read<ThemeNotifier>().accent,
       ),
     );
   }

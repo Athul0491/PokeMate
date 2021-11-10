@@ -15,25 +15,38 @@ class GetRaidBossInfo extends DatabaseEvent {
   List<Object?> get props => throw UnimplementedError();
 }
 
-class GetPVPIVs extends DatabaseEvent {
+class GetPVPInfoFromImage extends DatabaseEvent {
   final File image;
 
-  const GetPVPIVs({required this.image});
+  const GetPVPInfoFromImage({required this.image});
 
   @override
   List<Object?> get props => [image];
 }
 
-class GetPVPInfo extends DatabaseEvent {
+class GetPVPInfoFromAPI extends DatabaseEvent {
   @override
   // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
 }
 
-class GetWildPokemonInfo extends DatabaseEvent {
+class GetWildPokemonInfoFromImage extends DatabaseEvent {
+  final File image;
+
+  const GetWildPokemonInfoFromImage({required this.image});
+
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [image];
+}
+
+class GetWildPokemonInfoFromAPI extends DatabaseEvent {
+  final String name;
+  final int cp;
+
+  const GetWildPokemonInfoFromAPI({required this.name, required this.cp});
+
+  @override
+  List<Object?> get props => [name, cp];
 }
 
 class GetMyPokemons extends DatabaseEvent {

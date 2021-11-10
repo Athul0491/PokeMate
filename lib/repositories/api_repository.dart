@@ -1,34 +1,45 @@
+import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:pokemate/shared/shared_methods.dart';
 
 class APIRepository {
-  String url = '';
+  final Client _client = Client();
+  String url = 'pokemate01.herokuapp.com';
 
-  void getGreatLeaguePVPInfo(){
-
+  void getLeaguePVPInfo(String name, String league) async {
+    Response response = await _client.get(
+      Uri.https(
+        url,
+        "/api/$league-league",
+        {
+          'Pokemon': name.capitalize(),
+        },
+      ),
+    );
+    Map data = jsonDecode(response.body);
+    print(data);
   }
 
-  void getUltraLeaguePVPInfo(){
-
+  Future<Map<String, dynamic>?> getWildPokemonInfo(int id) async {
+    Response response = await _client.get(Uri.https(
+      url,
+      '/api/wild',
+      {'id': id.toString()},
+    ));
+    if(response.statusCode==200){
+      var data = jsonDecode(response.body);
+      print(data);
+      return data;
+    } else {
+      return null;
+    }
   }
 
-  void getMasterLeaguePVPInfo(){
+  void getPVPInfo() {}
 
-  }
-
-  void getWildPokemonPVPInfo(){
-
-  }
-
-  void getPVPInfo(){
-
-  }
-
-  String getPokemonImage(String name){
-
+  String getPokemonImage(String name) {
     return '';
   }
-
-
 }
 
 // Client _client = Client();
