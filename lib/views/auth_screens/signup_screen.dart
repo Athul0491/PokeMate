@@ -5,6 +5,7 @@ import 'package:pokemate/shared/custom_snackbar.dart';
 import 'package:pokemate/shared/custom_widgets.dart';
 import 'package:pokemate/themes/theme_notifiers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pokemate/views/auth_screens/login_screen.dart';
 
 class SignupPage extends StatefulWidget {
   final String name;
@@ -18,8 +19,8 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  String email = 'aadi@gmail.com';
-  String password = 'aadi123';
+  String email = '';
+  String password = '';
   String stateMessage = '';
   bool showPassword = false;
   bool showConfirmPassword = false;
@@ -53,6 +54,7 @@ class _SignupPageState extends State<SignupPage> {
       builder: (context, snapshot) {
         return SafeArea(
           child: Scaffold(
+            resizeToAvoidBottomInset: false,
             body: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -72,7 +74,7 @@ class _SignupPageState extends State<SignupPage> {
                     children: [
                       SizedBox(height: 25.w),
                       const CustomBackButton(),
-                      SizedBox(height: 75.h),
+                      SizedBox(height: 55.h),
                       Text(
                         'Welcome to,',
                         style: TextStyle(
@@ -91,7 +93,7 @@ class _SignupPageState extends State<SignupPage> {
                           color: Theme.of(context).colorScheme.onBackground,
                         ),
                       ),
-                      SizedBox(height: 60.h),
+                      SizedBox(height: 45.h),
                       Text(
                         'Create an account',
                         style: TextStyle(
@@ -164,16 +166,88 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 30.w),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: colors.accent),
-                        child: Text(
-                          'Signup',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: colors.onAccent,
+                      SizedBox(height: 20.w),
+                      Stack(
+                        children: [
+                          TextFormField(
+                            decoration: customInputDecoration(
+                                context: context, labelText: 'Password'),
+                            style: formTextStyle(colors),
+                            obscureText: !showPassword,
+                            onChanged: (value) {
+                              setState(() {
+                                password = value;
+                              });
+                            },
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your password';
+                              }
+                              if(value.length<8){
+                                return 'Minimum 8 characters';
+                              }
+                            },
                           ),
-                        ),
+                          Container(
+                            padding: EdgeInsets.only(right: 10.w),
+                            height: 56.w,
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                              icon: Icon(
+                                  showPassword
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  size: 28.w),
+                              onPressed: () {
+                                setState(() {
+                                  showPassword = !showPassword;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20.w),
+                      Stack(
+                        children: [
+                          TextFormField(
+                            decoration: customInputDecoration(
+                                context: context, labelText: 'Confirm Password'),
+                            style: formTextStyle(colors),
+                            obscureText: !showConfirmPassword,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please re-enter your password';
+                              }
+                              if (value != password) {
+                                return 'Passwords do not match!';
+                              }
+                            },
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(right: 10.w),
+                            height: 56.w,
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                              icon: Icon(
+                                  showConfirmPassword
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  size: 28.w),
+                              onPressed: () {
+                                setState(() {
+                                  showConfirmPassword = !showConfirmPassword;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 25.w),
+                      CustomElevatedButton(
+                        text: 'Signup',
                         onPressed: () {
                           if (!_formKey.currentState!.validate()) {
                             return;
@@ -188,6 +262,32 @@ class _SignupPageState extends State<SignupPage> {
                             age: widget.age,
                           ));
                         },
+                      ),
+                      SizedBox(height: 70.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Don't have an account?",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).colorScheme.onSurface),
+                          ),
+                          TextButton(
+                            child: Text(
+                              "Sign Up!",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: colors.accent),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                      const LoginPage()));
+                            },
+                          ),
+                        ],
                       ),
                     ],
                   ),
