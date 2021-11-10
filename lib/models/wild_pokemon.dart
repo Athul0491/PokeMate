@@ -2,10 +2,9 @@ import 'package:pokemate/models/pokemon_common.dart';
 import 'package:pokemate/shared/shared_methods.dart';
 
 class WildPokemon {
-  String name;
-  int cp;
-  late PokemonType type1;
-  late PokemonType type2;
+  final String name;
+  final int cp;
+  late List<PokemonType> types;
   late List<TypeEffect> weakness;
   late List<TypeEffect> resistance;
   late String imageUrl;
@@ -18,16 +17,6 @@ class WildPokemon {
   WildPokemon({
     this.name = '',
     this.cp = 0,
-    this.type1 = const PokemonType.empty(),
-    this.type2 = const PokemonType.empty(),
-    this.weakness = const [],
-    this.resistance = const [],
-    this.imageUrl = '',
-    this.captureRate = 0,
-    this.fleeRate = 0,
-    this.estimatedLevel = '',
-    this.rawTable = const [],
-    this.parsedTable = const [],
   });
 
   WildPokemon.fromAPI({
@@ -35,11 +24,9 @@ class WildPokemon {
     required this.cp,
     required Map<String, dynamic> data,
   }) {
-    type1 = PokemonType(data['Types'][0]['0']);
-    if ({data['Types'] as List}.length > 1) {
-      type2 = PokemonType(data['Types'][1]['1']);
-    } else {
-      type2 = const PokemonType.empty();
+    types = [];
+    for (int i = 0; i < (data['Types'] as List).length; i++) {
+      types.add(PokemonType(data['Types'][i]['0']));
     }
     weakness = [];
     for (var type in data['Vulnerable']) {
@@ -82,7 +69,7 @@ class WildPokemon {
 
   @override
   String toString() {
-    return '$name - CP$cp, Type: $type1-$type2, Weakness: $weakness, Resistance: $resistance, Flee rate: $fleeRate, captureRate: $captureRate, estLvl: $estimatedLevel';
+    return '$name - CP$cp, Type: $types, Weakness: $weakness, Resistance: $resistance, Flee rate: $fleeRate, captureRate: $captureRate, estLvl: $estimatedLevel';
   }
 
   double getClosest(double val1, double val2, double target) {

@@ -22,6 +22,16 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  late String pokemonJsonStr;
+  late String pvpMoveJsonStr;
+
+  Future loadAssets() async {
+    pokemonJsonStr =
+        await DefaultAssetBundle.of(context).loadString("assets/pokemon.json");
+    pvpMoveJsonStr =
+        await DefaultAssetBundle.of(context).loadString("assets/moves.json");
+  }
+
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider<AuthRepository>(
@@ -35,22 +45,22 @@ class _AppState extends State<App> {
         },
         child: FutureBuilder(
           // To load the pokemon.json file and passing it to bloc
-          future: DefaultAssetBundle.of(context).loadString("assets/pokemon.json"),
+          future: loadAssets(),
           builder: (context, snapshot) {
-            if(snapshot.connectionState!=ConnectionState.done){
+            if (snapshot.connectionState != ConnectionState.done) {
               return const MaterialApp(home: Loading());
             }
+            print('fuck you');
             return BlocBuilder<AppBloc, AppState>(
               builder: (context, state) {
-                // TODO: BlocProvider for DatabaseBloc
                 return BlocProvider<DatabaseBloc>(
                   create: (context) {
                     UserData userData = context.read<AppBloc>().userData;
                     return DatabaseBloc(
-                        userData: userData,
-                        databaseRepository:
-                            DatabaseRepository(uid: userData.uid),
-                        pokemonJSON: PokemonJSON(context, snapshot.data as String),
+                      userData: userData,
+                      databaseRepository: DatabaseRepository(uid: userData.uid),
+                      pokemonJSON: PokemonJSON(pokemonJsonStr),
+                      pvpMovesJSON: PVPMovesJSON(pvpMoveJsonStr),
                     );
                   },
                   child: ScreenUtilInit(

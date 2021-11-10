@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:pokemate/models/pokemon_common.dart';
 import 'package:pokemate/models/pokemon_db.dart';
 import 'package:pokemate/models/user.dart';
 
@@ -54,16 +53,9 @@ class DatabaseRepository {
       );
 
   // Get Pokemons from db
-  Future<List<PokemonDB>> getPokemons({String path = ''}) async {
+  Future<List<PokemonDB>> getPokemons() async {
     List<QueryDocumentSnapshot<PokemonDB>> list = [];
-    if (path == '') {
-      list = await pokemonsRef.get().then((snapshot) => snapshot.docs);
-    } else {
-      list = await pokemonsRef
-          .where('path', isEqualTo: path)
-          .get()
-          .then((snapshot) => snapshot.docs);
-    }
+    list = await pokemonsRef.get().then((snapshot) => snapshot.docs);
     return list.map((e) => e.data()).toList();
   }
 

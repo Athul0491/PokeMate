@@ -1,88 +1,192 @@
 import 'package:pokemate/models/pokemon_common.dart';
+import 'package:pokemate/shared/shared_methods.dart';
 
 class PokemonPVP {
   final String name;
   final List<int> ivs;
-  late PokemonType type1;
-  late PokemonType type2;
+  final String league;
+  late List<PokemonType> types;
   late List<TypeEffect> weakness;
   late List<TypeEffect> resistance;
-  late PVPStats pvpStats;
+  late String imageUrl;
+  late List<String> stats;
+  late IVStats userIVStats;
+  late IVStats bestIVStats;
+  late PVPMetaDetails metaDetails;
+  late List<PVPMove> fastMoves;
+  late List<PVPMove> chargedMoves;
+  late List<PVPMove> bestMoveSet;
 
   PokemonPVP({
     this.name = '',
     this.ivs = const [0, 0, 0],
-    this.type1 = const PokemonType.empty(),
-    this.type2 = const PokemonType.empty(),
-    this.weakness = const [],
-    this.resistance = const [],
-    this.pvpStats = const PVPStats(),
+    this.league = '',
   });
 
   PokemonPVP.fromAPI({
     required this.name,
     required this.ivs,
+    required this.league,
     required Map<String, dynamic> pokemonData,
     required Map<String, dynamic> pvpData,
     required Map<String, dynamic> ivData,
+    required PokemonJSON pokemonJSON,
+    required PVPMovesJSON pvpMovesJSON,
   }) {
-    type1 = PokemonType(pokemonData['Types'][0]['0']);
-    if ({pokemonData['Types'] as List}.length > 1) {
-      type2 = PokemonType(pokemonData['Types'][1]['1']);
-    } else {
-      type2 = const PokemonType.empty();
+    types = [];
+    for (int i = 0; i < (pokemonData['Types'] as List).length; i++) {
+      types.add(PokemonType(pokemonData['Types'][i]['$i']));
     }
+    weakness = [];
+    for (var type in pokemonData['Vulnerable']) {
+      String multiplier = type['multiplier'] ?? '0%';
+      String name = type['name'] ?? 'Normal';
+      multiplier = multiplier.substring(0, multiplier.length - 1);
+      weakness.add(TypeEffect(
+        type: PokemonType(name.capitalize()),
+        multiplier: double.tryParse(multiplier)!,
+      ));
+    }
+    resistance = [];
+    for (var type in pokemonData['Resistant']) {
+      String multiplier = type['multiplier'] ?? '0%';
+      String name = type['name'] ?? 'Normal';
+      multiplier = multiplier.substring(0, multiplier.length - 1);
+      resistance.add(TypeEffect(
+        type: PokemonType(name.capitalize()),
+        multiplier: double.tryParse(multiplier)!,
+      ));
+    }
+    imageUrl = pokemonData['img'];
+    stats = (pokemonData['Stats'] as String).split(',');
+    String perfStr = ivData['user_pokemon']['perfection'];
+    userIVStats = IVStats(
+      rank: int.tryParse(ivData['user_pokemon']['rank']) ?? 0,
+      ivs: ivs,
+      lvl: double.tryParse(ivData['user_pokemon']['lvl']) ?? 0,
+      cp: int.tryParse(ivData['user_pokemon']['cp']) ?? 0,
+      perfectionPercent:
+          double.tryParse(perfStr.substring(0, perfStr.length - 1)) ?? 0,
+    );
+    perfStr = ivData['rank1_pokemon']['perfection'];
+    bestIVStats = IVStats(
+      rank: int.tryParse(ivData['rank1_pokemon']['rank']) ?? 0,
+      ivs: [
+        int.tryParse(ivData['rank1_pokemon']['att']) ?? 0,
+        int.tryParse(ivData['rank1_pokemon']['def']) ?? 0,
+        int.tryParse(ivData['rank1_pokemon']['hp']) ?? 0,
+      ],
+      lvl: double.tryParse(ivData['rank1_pokemon']['lvl']) ?? 0,
+      cp: int.tryParse(ivData['rank1_pokemon']['cp']) ?? 0,
+      perfectionPercent:
+          double.tryParse(perfStr.substring(0, perfStr.length - 1)) ?? 0,
+    );
+    List<PVPMatchUp> keyWins = [];
+    print(pvpData);
+    for (var matchUpData in pvpData['matchups']) {
+      keyWins.add(PVPMatchUp(
+        name: (matchUpData['opponent'] as String).capitalize(),
+        rating: matchUpData['rating'],
+        type: pokemonJSON.getTypes(name),
+        imageUrl: pokemonJSON.getImage(name),
+      ));
+    }
+    List<PVPMatchUp> keyLosses = [];
+    for (var matchUpData in pvpData['counters']) {
+      keyLosses.add(PVPMatchUp(
+        name: (matchUpData['opponent'] as String).capitalize(),
+        rating: matchUpData['rating'],
+        type: pokemonJSON.getTypes(name),
+        imageUrl: pokemonJSON.getImage(name),
+      ));
+    }
+    metaDetails = PVPMetaDetails(
+      rank: (pvpData['rank']),
+      rating: (pvpData['rating']),
+      overallScore: pvpData['score'],
+      scores: [
+        for (var score in pvpData['scores'])
+          (score is double) ? score : (score as int).floorToDouble(),
+      ],
+      keyWins: keyWins,
+      keyLosses: keyLosses,
+    );
+    fastMoves = [];
+    for (var move in pvpData['moves']['fastMoves']) {
+      fastMoves.add(pvpMovesJSON.getMoveSet(move['moveId']));
+    }
+    chargedMoves = [];
+    for (var move in pvpData['moves']['chargedMoves']) {
+      chargedMoves.add(pvpMovesJSON.getMoveSet(move['moveId']));
+    }
+    bestMoveSet = [];
+    for (var move in pvpData['moveset']) {
+      bestMoveSet.add(pvpMovesJSON.getMoveSet(move));
+    }
+  }
+
+  @override
+  String toString() {
+    return '$name - $ivs, #${metaDetails.rank}';
   }
 }
 
-// var data = {
-//   speciesId: swampert,
-//   speciesName: Swampert,
-//   rating: 704,
-//   matchups: [
-//     {opponent: giratina_altered, rating: 525},
-//     {opponent: melmetal, rating: 838},
-//     {opponent: muk_alolan, rating: 883},
-//     {opponent: escavalier, rating: 718},
-//     {opponent: charizard, rating: 565}
-//   ],
-//   counters: [
-//     {opponent: cresselia, rating: 310},
-//     {opponent: togekiss, rating: 472},
-//     {opponent: obstagoon, rating: 403},
-//     {opponent: articuno, rating: 354},
-//     {opponent: venusaur, rating: 415}
-//   ],
-//   moves: {
-//     fastMoves: [
-//       {moveId: WATER_GUN, uses: 32129},
-//       {moveId: MUD_SHOT, uses: 48271}
-//     ],
-//     chargedMoves: [
-//       {moveId: SURF, uses: 10475},
-//       {moveId: SLUDGE_WAVE, uses: 6938},
-//       {moveId: RETURN, uses: 6105},
-//       {moveId: MUDDY_WATER, uses: 12049},
-//       {moveId: HYDRO_CANNON, uses: 31348},
-//       {moveId: EARTHQUAKE, uses: 13516}
-//     ]
-//   },
-//   moveset: [MUD_SHOT, HYDRO_CANNON, EARTHQUAKE],
-//   score: 92.4,
-//   scores: [94.4, 90.4, 89.1, 97.5, 77.6, 88.1],
-//   rank: 5,
-// }
-
-class PVPStats {
+class IVStats {
   final int rank;
+  final List<int> ivs;
   final double lvl;
   final int cp;
   final double perfectionPercent;
 
-  const PVPStats({
+  const IVStats({
     this.rank = 0,
+    this.ivs = const [0, 0, 0],
     this.lvl = 0,
     this.cp = 0,
     this.perfectionPercent = 0.0,
+  });
+}
+
+class PVPMetaDetails {
+  final int rank;
+  final int rating;
+  final double overallScore;
+  final List<double> scores;
+  final List<PVPMatchUp> keyWins;
+  final List<PVPMatchUp> keyLosses;
+
+  const PVPMetaDetails({
+    this.rank = 0,
+    this.rating = 0,
+    this.keyWins = const [],
+    this.keyLosses = const [],
+    this.overallScore = 0,
+    this.scores = const [],
+  });
+}
+
+class PVPMatchUp {
+  final String name;
+  final String imageUrl;
+  final List<PokemonType> type;
+  final int rating;
+
+  const PVPMatchUp({
+    this.name = '',
+    this.imageUrl = '',
+    this.rating = 0,
+    this.type = const [],
+  });
+}
+
+class PVPMove {
+  final String name;
+  final PokemonType type;
+  final String archetype;
+
+  const PVPMove({
+    this.name = '',
+    this.type = const PokemonType.empty(),
+    this.archetype = '',
   });
 }

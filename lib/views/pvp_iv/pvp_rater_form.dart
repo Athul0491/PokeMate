@@ -1,15 +1,13 @@
 import 'dart:io';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 import 'package:pokemate/bloc/database_bloc/database_bloc.dart';
 import 'package:pokemate/bloc/database_bloc/database_bloc_files.dart';
 import 'package:pokemate/models/pokemon_common.dart';
 import 'package:pokemate/shared/loading.dart';
-import 'package:pokemate/shared/shared_methods.dart';
 import 'package:pokemate/themes/theme_notifiers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pokemate/views/pvp_iv/pvp_rater_page.dart';
 
 class PVPRaterForm extends StatefulWidget {
   final InputType inputType;
@@ -23,20 +21,17 @@ class PVPRaterForm extends StatefulWidget {
 }
 
 class _PVPRaterFormState extends State<PVPRaterForm> {
-  File? _image;
-  String tempMessage = '';
   String _name = '';
   List<int> _ivs = [0, 0, 0];
-  String _id = '';
+  String _league = 'great';
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    _image = widget.image;
-    if (_image != null) {
-      context.read<DatabaseBloc>().add(GetPVPInfoFromImage(image: _image!));
+    if (widget.image != null) {
+      context.read<DatabaseBloc>().add(GetPVPInfoFromImage(image: widget.image!));
     }
   }
 
@@ -59,15 +54,6 @@ class _PVPRaterFormState extends State<PVPRaterForm> {
               if (state is PVPRaterFormState) {
                 _ivs = state.ivs;
                 _name = state.name;
-                int startTime = DateTime.now().millisecondsSinceEpoch;
-                String data = await DefaultAssetBundle.of(context)
-                    .loadString("assets/pokemon.json");
-                final jsonResult = jsonDecode(data);
-                print('_' + _name + '_');
-                _id = jsonResult[_name.toLowerCase()]['name'].toString();
-                int endTime = DateTime.now().millisecondsSinceEpoch;
-                print("Loading took ${endTime - startTime}ms");
-                print(_id);
               }
             },
             builder: (context, state) {
@@ -88,32 +74,22 @@ class _PVPRaterFormState extends State<PVPRaterForm> {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(primary: colors.accent),
                       child: Text(
-                        'API',
+                        'Next',
                         style: TextStyle(
                           fontSize: 20,
                           color: colors.onAccent,
                         ),
                       ),
                       onPressed: () async {
-                        Client _client = Client();
-                        // Response response = await _client.get(
-                        //     Uri.https("pokemate01.herokuapp.com","/api/ultra-league", {
-                        //       'Pokemon': 'stunfisk'
-                        //     })
-                        // );
-                        Response response = await _client.get(Uri.https(
-                          "pokemate01.herokuapp.com",
-                          "/api/pvp",
-                          {
-                            'name': 'Sylveon'.capitalize(),
-                            'attack': '0',
-                            'defence': '14',
-                            'hp': '14',
-                            'league': '0',
-                          },
-                        ));
-                        Map data = jsonDecode(response.body);
-                        print(data);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PVPRaterPage(
+                                name: _name,
+                                ivs: _ivs,
+                                league: _league,
+                              ),
+                            ));
                       },
                     ),
                     Text(

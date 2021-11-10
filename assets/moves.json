@@ -1,0 +1,1049 @@
+{
+  "ACID": { "name": "Acid", "type": "poison", "archetype": "Low Quality" },
+  "ACID_SPRAY": {
+    "name": "Acid Spray",
+    "type": "poison",
+    "archetype": "Debuff"
+  },
+  "AERIAL_ACE": {
+    "name": "Aerial Ace",
+    "type": "flying",
+    "archetype": "General"
+  },
+  "AEROBLAST": {
+    "name": "Aeroblast",
+    "type": "flying",
+    "archetype": "Boost Nuke"
+  },
+  "AIR_CUTTER": {
+    "name": "Air Cutter",
+    "type": "flying",
+    "archetype": "High Energy"
+  },
+  "AIR_SLASH": {
+    "name": "Air Slash",
+    "type": "flying",
+    "archetype": "General"
+  },
+  "ANCIENT_POWER": {
+    "name": "Ancient Power",
+    "type": "rock",
+    "archetype": "Boost"
+  },
+  "AQUA_JET": { "name": "Aqua Jet", "type": "water", "archetype": "General" },
+  "AQUA_TAIL": {
+    "name": "Aqua Tail",
+    "type": "water",
+    "archetype": "Spam/Bait"
+  },
+  "ASTONISH": {
+    "name": "Astonish",
+    "type": "ghost",
+    "archetype": "Low Quality"
+  },
+  "AURA_SPHERE": {
+    "name": "Aura Sphere",
+    "type": "fighting",
+    "archetype": "Nuke"
+  },
+  "AURORA_BEAM": {
+    "name": "Aurora Beam",
+    "type": "ice",
+    "archetype": "High Energy"
+  },
+  "AVALANCHE": { "name": "Avalanche", "type": "ice", "archetype": "General" },
+  "BITE": { "name": "Bite", "type": "dark", "archetype": "Heavy Damage" },
+  "BLAST_BURN": {
+    "name": "Blast Burn",
+    "type": "fire",
+    "archetype": "General"
+  },
+  "BLIZZARD": { "name": "Blizzard", "type": "ice", "archetype": "Nuke" },
+  "BODY_SLAM": {
+    "name": "Body Slam",
+    "type": "normal",
+    "archetype": "Spam/Bait"
+  },
+  "BONE_CLUB": {
+    "name": "Bone Club",
+    "type": "ground",
+    "archetype": "Spam/Bait"
+  },
+  "BRAVE_BIRD": {
+    "name": "Brave Bird",
+    "type": "flying",
+    "archetype": "Self-Debuff Nuke"
+  },
+  "BRICK_BREAK": {
+    "name": "Brick Break",
+    "type": "fighting",
+    "archetype": "Spam/Bait"
+  },
+  "BRINE": { "name": "Brine", "type": "water", "archetype": "General" },
+  "BUBBLE": { "name": "Bubble", "type": "water", "archetype": "Fast Charge" },
+  "BUBBLE_BEAM": {
+    "name": "Bubble Beam",
+    "type": "water",
+    "archetype": "Debuff Spam/Bait"
+  },
+  "BUG_BITE": { "name": "Bug Bite", "type": "bug", "archetype": "General" },
+  "BUG_BUZZ": {
+    "name": "Bug Buzz",
+    "type": "bug",
+    "archetype": "High Energy Debuff"
+  },
+  "BULLDOZE": {
+    "name": "Bulldoze",
+    "type": "ground",
+    "archetype": "High Energy"
+  },
+  "BULLET_PUNCH": {
+    "name": "Bullet Punch",
+    "type": "steel",
+    "archetype": "Fast Charge"
+  },
+  "BULLET_SEED": {
+    "name": "Bullet Seed",
+    "type": "grass",
+    "archetype": "Fast Charge"
+  },
+  "CHARGE_BEAM": {
+    "name": "Charge Beam",
+    "type": "electric",
+    "archetype": "Fast Charge"
+  },
+  "CHARM": { "name": "Charm", "type": "fairy", "archetype": "Heavy Damage" },
+  "CLOSE_COMBAT": {
+    "name": "Close Combat",
+    "type": "fighting",
+    "archetype": "Self-Debuff"
+  },
+  "CONFUSION": {
+    "name": "Confusion",
+    "type": "psychic",
+    "archetype": "Multipurpose"
+  },
+  "COUNTER": {
+    "name": "Counter",
+    "type": "fighting",
+    "archetype": "Multipurpose"
+  },
+  "CRABHAMMER": { "name": "Crabhammer", "type": "water", "archetype": "Boost" },
+  "CROSS_CHOP": {
+    "name": "Cross Chop",
+    "type": "fighting",
+    "archetype": "Spam/Bait"
+  },
+  "CROSS_POISON": {
+    "name": "Cross Poison",
+    "type": "poison",
+    "archetype": "Boost Spam/Bait"
+  },
+  "CRUNCH": { "name": "Crunch", "type": "dark", "archetype": "Debuff" },
+  "CUT": { "name": "Cut", "type": "normal", "archetype": "Low Quality" },
+  "DARK_PULSE": {
+    "name": "Dark Pulse",
+    "type": "dark",
+    "archetype": "General"
+  },
+  "DAZZLING_GLEAM": {
+    "name": "Dazzling Gleam",
+    "type": "fairy",
+    "archetype": "Nuke"
+  },
+  "DIG": { "name": "Dig", "type": "ground", "archetype": "High Energy" },
+  "DISARMING_VOICE": {
+    "name": "Disarming Voice",
+    "type": "fairy",
+    "archetype": "General"
+  },
+  "DISCHARGE": {
+    "name": "Discharge",
+    "type": "electric",
+    "archetype": "General"
+  },
+  "DOOM_DESIRE": {
+    "name": "Doom Desire",
+    "type": "steel",
+    "archetype": "Spam/Bait"
+  },
+  "DRACO_METEOR": {
+    "name": "Draco Meteor",
+    "type": "dragon",
+    "archetype": "Self-Debuff Nuke"
+  },
+  "DRAGON_BREATH": {
+    "name": "Dragon Breath",
+    "type": "dragon",
+    "archetype": "Multipurpose"
+  },
+  "DRAGON_CLAW": {
+    "name": "Dragon Claw",
+    "type": "dragon",
+    "archetype": "Spam/Bait"
+  },
+  "DRAGON_PULSE": {
+    "name": "Dragon Pulse",
+    "type": "dragon",
+    "archetype": "High Energy"
+  },
+  "DRAGON_TAIL": {
+    "name": "Dragon Tail",
+    "type": "dragon",
+    "archetype": "Multipurpose"
+  },
+  "DRAINING_KISS": {
+    "name": "Draining Kiss",
+    "type": "fairy",
+    "archetype": "High Energy"
+  },
+  "DRILL_PECK": {
+    "name": "Drill Peck",
+    "type": "flying",
+    "archetype": "Spam/Bait"
+  },
+  "DRILL_RUN": {
+    "name": "Drill Run",
+    "type": "ground",
+    "archetype": "General"
+  },
+  "DYNAMIC_PUNCH": {
+    "name": "Dynamic Punch",
+    "type": "fighting",
+    "archetype": "General"
+  },
+  "EARTHQUAKE": { "name": "Earthquake", "type": "ground", "archetype": "Nuke" },
+  "EARTH_POWER": {
+    "name": "Earth Power",
+    "type": "ground",
+    "archetype": "High Energy Debuff"
+  },
+  "EMBER": { "name": "Ember", "type": "fire", "archetype": "Heavy Damage" },
+  "ENERGY_BALL": {
+    "name": "Energy Ball",
+    "type": "grass",
+    "archetype": "High Energy Debuff"
+  },
+  "EXTRASENSORY": {
+    "name": "Extrasensory",
+    "type": "psychic",
+    "archetype": "General"
+  },
+  "FEINT_ATTACK": {
+    "name": "Feint Attack",
+    "type": "dark",
+    "archetype": "General"
+  },
+  "FELL_STINGER": {
+    "name": "Fell Stinger",
+    "type": "bug",
+    "archetype": "Boost Spam/Bait"
+  },
+  "FIRE_BLAST": { "name": "Fire Blast", "type": "fire", "archetype": "Nuke" },
+  "FIRE_FANG": {
+    "name": "Fire Fang",
+    "type": "fire",
+    "archetype": "Heavy Damage"
+  },
+  "FIRE_PUNCH": {
+    "name": "Fire Punch",
+    "type": "fire",
+    "archetype": "Spam/Bait"
+  },
+  "BLAZE_KICK": {
+    "name": "Blaze Kick",
+    "type": "fire",
+    "archetype": "Spam/Bait"
+  },
+  "FEATHER_DANCE": {
+    "name": "Feather Dance",
+    "type": "flying",
+    "archetype": "Debuff"
+  },
+  "FIRE_SPIN": { "name": "Fire Spin", "type": "fire", "archetype": "General" },
+  "FLAME_BURST": {
+    "name": "Flame Burst",
+    "type": "fire",
+    "archetype": "High Energy"
+  },
+  "FLAME_CHARGE": {
+    "name": "Flame Charge",
+    "type": "fire",
+    "archetype": "Boost"
+  },
+  "FLAME_WHEEL": {
+    "name": "Flame Wheel",
+    "type": "fire",
+    "archetype": "High Energy"
+  },
+  "FLAMETHROWER": {
+    "name": "Flamethrower",
+    "type": "fire",
+    "archetype": "High Energy"
+  },
+  "FLASH_CANNON": {
+    "name": "Flash Cannon",
+    "type": "steel",
+    "archetype": "Nuke"
+  },
+  "FLY": { "name": "Fly", "type": "flying", "archetype": "General" },
+  "FLYING_PRESS": {
+    "name": "Flying Press",
+    "type": "fighting",
+    "archetype": "Spam/Bait"
+  },
+  "FOCUS_BLAST": {
+    "name": "Focus Blast",
+    "type": "fighting",
+    "archetype": "Nuke"
+  },
+  "FOUL_PLAY": { "name": "Foul Play", "type": "dark", "archetype": "General" },
+  "FRENZY_PLANT": {
+    "name": "Frenzy Plant",
+    "type": "grass",
+    "archetype": "General"
+  },
+  "FROST_BREATH": {
+    "name": "Frost Breath",
+    "type": "ice",
+    "archetype": "Heavy Damage"
+  },
+  "FRUSTRATION": {
+    "name": "Frustration",
+    "type": "normal",
+    "archetype": "High Energy"
+  },
+  "FURY_CUTTER": {
+    "name": "Fury Cutter",
+    "type": "bug",
+    "archetype": "Fast Charge"
+  },
+  "FUTURE_SIGHT": {
+    "name": "Future Sight",
+    "type": "psychic",
+    "archetype": "Nuke"
+  },
+  "GIGA_DRAIN": {
+    "name": "Giga Drain",
+    "type": "grass",
+    "archetype": "High Energy"
+  },
+  "GIGA_IMPACT": {
+    "name": "Giga Impact",
+    "type": "normal",
+    "archetype": "Nuke"
+  },
+  "GRASS_KNOT": {
+    "name": "Grass Knot",
+    "type": "grass",
+    "archetype": "General"
+  },
+  "GUNK_SHOT": { "name": "Gunk Shot", "type": "poison", "archetype": "Nuke" },
+  "GUST": { "name": "Gust", "type": "flying", "archetype": "Multipurpose" },
+  "GYRO_BALL": {
+    "name": "Gyro Ball",
+    "type": "steel",
+    "archetype": "High Energy"
+  },
+  "HEART_STAMP": {
+    "name": "Heart Stamp",
+    "type": "psychic",
+    "archetype": "Spam/Bait"
+  },
+  "HEAT_WAVE": {
+    "name": "Heat Wave",
+    "type": "fire",
+    "archetype": "High Energy"
+  },
+  "HEAVY_SLAM": {
+    "name": "Heavy Slam",
+    "type": "steel",
+    "archetype": "General"
+  },
+  "HEX": { "name": "Hex", "type": "ghost", "archetype": "Fast Charge" },
+  "HIDDEN_POWER_BUG": {
+    "name": "Hidden Power (Bug)",
+    "type": "bug",
+    "archetype": "Low Quality"
+  },
+  "HIDDEN_POWER_DARK": {
+    "name": "Hidden Power (Dark)",
+    "type": "dark",
+    "archetype": "Low Quality"
+  },
+  "HIDDEN_POWER_DRAGON": {
+    "name": "Hidden Power (Dragon)",
+    "type": "dragon",
+    "archetype": "Low Quality"
+  },
+  "HIDDEN_POWER_ELECTRIC": {
+    "name": "Hidden Power (Electric)",
+    "type": "electric",
+    "archetype": "Low Quality"
+  },
+  "HIDDEN_POWER_FIGHTING": {
+    "name": "Hidden Power (Fighting)",
+    "type": "fighting",
+    "archetype": "Low Quality"
+  },
+  "HIDDEN_POWER_FIRE": {
+    "name": "Hidden Power (Fire)",
+    "type": "fire",
+    "archetype": "Low Quality"
+  },
+  "HIDDEN_POWER_FLYING": {
+    "name": "Hidden Power (Flying)",
+    "type": "flying",
+    "archetype": "Low Quality"
+  },
+  "HIDDEN_POWER_GHOST": {
+    "name": "Hidden Power (Ghost)",
+    "type": "ghost",
+    "archetype": "Low Quality"
+  },
+  "HIDDEN_POWER_GRASS": {
+    "name": "Hidden Power (Grass)",
+    "type": "grass",
+    "archetype": "Low Quality"
+  },
+  "HIDDEN_POWER_GROUND": {
+    "name": "Hidden Power (Ground)",
+    "type": "ground",
+    "archetype": "Low Quality"
+  },
+  "HIDDEN_POWER_ICE": {
+    "name": "Hidden Power (Ice)",
+    "type": "ice",
+    "archetype": "Low Quality"
+  },
+  "HIDDEN_POWER_POISON": {
+    "name": "Hidden Power (Poison)",
+    "type": "poison",
+    "archetype": "Low Quality"
+  },
+  "HIDDEN_POWER_PSYCHIC": {
+    "name": "Hidden Power (Psychic)",
+    "type": "psychic",
+    "archetype": "Low Quality"
+  },
+  "HIDDEN_POWER_ROCK": {
+    "name": "Hidden Power (Rock)",
+    "type": "rock",
+    "archetype": "Low Quality"
+  },
+  "HIDDEN_POWER_STEEL": {
+    "name": "Hidden Power (Steel)",
+    "type": "steel",
+    "archetype": "Low Quality"
+  },
+  "HIDDEN_POWER_WATER": {
+    "name": "Hidden Power (Water)",
+    "type": "water",
+    "archetype": "Low Quality"
+  },
+  "HORN_ATTACK": {
+    "name": "Horn Attack",
+    "type": "normal",
+    "archetype": "Spam/Bait"
+  },
+  "HURRICANE": { "name": "Hurricane", "type": "flying", "archetype": "Nuke" },
+  "HYDRO_CANNON": {
+    "name": "Hydro Cannon",
+    "type": "water",
+    "archetype": "Spam/Bait"
+  },
+  "HYDRO_PUMP": { "name": "Hydro Pump", "type": "water", "archetype": "Nuke" },
+  "HYDRO_PUMP_BLASTOISE": {
+    "name": "Hydro Pump Blastoise",
+    "type": "water",
+    "archetype": "High Energy"
+  },
+  "HYPER_BEAM": { "name": "Hyper Beam", "type": "normal", "archetype": "Nuke" },
+  "HYPER_FANG": {
+    "name": "Hyper Fang",
+    "type": "normal",
+    "archetype": "General"
+  },
+  "ICE_BEAM": { "name": "Ice Beam", "type": "ice", "archetype": "High Energy" },
+  "ICE_FANG": {
+    "name": "Ice Fang",
+    "type": "ice",
+    "archetype": "Heavy Damage"
+  },
+  "ICE_PUNCH": { "name": "Ice Punch", "type": "ice", "archetype": "Spam/Bait" },
+  "ICE_SHARD": { "name": "Ice Shard", "type": "ice", "archetype": "General" },
+  "ICY_WIND": { "name": "Icy Wind", "type": "ice", "archetype": "Debuff" },
+  "INCINERATE": {
+    "name": "Incinerate",
+    "type": "fire",
+    "archetype": "Multipurpose"
+  },
+  "INFESTATION": {
+    "name": "Infestation",
+    "type": "bug",
+    "archetype": "Fast Charge"
+  },
+  "IRON_HEAD": { "name": "Iron Head", "type": "steel", "archetype": "General" },
+  "IRON_TAIL": {
+    "name": "Iron Tail",
+    "type": "steel",
+    "archetype": "Low Quality"
+  },
+  "KARATE_CHOP": {
+    "name": "Karate Chop",
+    "type": "fighting",
+    "archetype": "Fast Charge"
+  },
+  "LAST_RESORT": {
+    "name": "Last Resort",
+    "type": "normal",
+    "archetype": "High Energy"
+  },
+  "LEAF_BLADE": {
+    "name": "Leaf Blade",
+    "type": "grass",
+    "archetype": "Spam/Bait"
+  },
+  "LEAF_TORNADO": {
+    "name": "Leaf Tornado",
+    "type": "grass",
+    "archetype": "Debuff Spam/Bait"
+  },
+  "LEAF_STORM": {
+    "name": "Leaf Storm",
+    "type": "grass",
+    "archetype": "Self-Debuff Nuke"
+  },
+  "LICK": { "name": "Lick", "type": "ghost", "archetype": "General" },
+  "LOCK_ON": {
+    "name": "Lock On",
+    "type": "normal",
+    "archetype": "Fast Charge"
+  },
+  "LOW_KICK": {
+    "name": "Low Kick",
+    "type": "fighting",
+    "archetype": "Low Quality"
+  },
+  "LOW_SWEEP": {
+    "name": "Low Sweep",
+    "type": "fighting",
+    "archetype": "Spam/Bait"
+  },
+  "LUNGE": { "name": "Lunge", "type": "bug", "archetype": "Debuff" },
+  "MAGNET_BOMB": {
+    "name": "Magnet Bomb",
+    "type": "steel",
+    "archetype": "General"
+  },
+  "MEGA_DRAIN": {
+    "name": "Mega Drain",
+    "type": "grass",
+    "archetype": "High Energy"
+  },
+  "MEGAHORN": { "name": "Megahorn", "type": "bug", "archetype": "Nuke" },
+  "METAL_CLAW": {
+    "name": "Metal Claw",
+    "type": "steel",
+    "archetype": "Low Quality"
+  },
+  "METEOR_MASH": {
+    "name": "Meteor Mash",
+    "type": "steel",
+    "archetype": "General"
+  },
+  "MIRROR_COAT": {
+    "name": "Mirror Coat",
+    "type": "psychic",
+    "archetype": "High Energy"
+  },
+  "MIRROR_SHOT": {
+    "name": "Mirror Shot",
+    "type": "steel",
+    "archetype": "Debuff Spam/Bait"
+  },
+  "MOONBLAST": {
+    "name": "Moonblast",
+    "type": "fairy",
+    "archetype": "Debuff Nuke"
+  },
+  "MUD_BOMB": {
+    "name": "Mud Bomb",
+    "type": "ground",
+    "archetype": "Spam/Bait"
+  },
+  "MUDDY_WATER": {
+    "name": "Muddy Water",
+    "type": "water",
+    "archetype": "Debuff Spam/Bait"
+  },
+  "MUD_SHOT": {
+    "name": "Mud Shot",
+    "type": "ground",
+    "archetype": "Fast Charge"
+  },
+  "MUD_SLAP": {
+    "name": "Mud Slap",
+    "type": "ground",
+    "archetype": "Heavy Damage"
+  },
+  "NIGHT_SHADE": {
+    "name": "Night Shade",
+    "type": "ghost",
+    "archetype": "High Energy"
+  },
+  "NIGHT_SLASH": {
+    "name": "Night Slash",
+    "type": "dark",
+    "archetype": "Boost Spam/Bait"
+  },
+  "OCTAZOOKA": { "name": "Octazooka", "type": "water", "archetype": "Debuff" },
+  "OMINOUS_WIND": {
+    "name": "Ominous Wind",
+    "type": "ghost",
+    "archetype": "Boost"
+  },
+  "ORIGIN_PULSE": {
+    "name": "Origin Pulse",
+    "type": "water",
+    "archetype": "Nuke"
+  },
+  "OUTRAGE": { "name": "Outrage", "type": "dragon", "archetype": "Nuke" },
+  "OVERHEAT": {
+    "name": "Overheat",
+    "type": "fire",
+    "archetype": "Self-Debuff Nuke"
+  },
+  "PARABOLIC_CHARGE": {
+    "name": "Parabolic Charge",
+    "type": "electric",
+    "archetype": "High Energy"
+  },
+  "PAYBACK": { "name": "Payback", "type": "dark", "archetype": "Nuke" },
+  "PECK": { "name": "Peck", "type": "flying", "archetype": "Low Quality" },
+  "PETAL_BLIZZARD": {
+    "name": "Petal Blizzard",
+    "type": "grass",
+    "archetype": "Nuke"
+  },
+  "PLAY_ROUGH": {
+    "name": "Play Rough",
+    "type": "fairy",
+    "archetype": "High Energy"
+  },
+  "POISON_FANG": {
+    "name": "Poison Fang",
+    "type": "poison",
+    "archetype": "Debuff Spam/Bait"
+  },
+  "POISON_JAB": {
+    "name": "Poison Jab",
+    "type": "poison",
+    "archetype": "General"
+  },
+  "POISON_STING": {
+    "name": "Poison Sting",
+    "type": "poison",
+    "archetype": "Fast Charge"
+  },
+  "POUND": { "name": "Pound", "type": "normal", "archetype": "Low Quality" },
+  "POWDER_SNOW": {
+    "name": "Powder Snow",
+    "type": "ice",
+    "archetype": "Fast Charge"
+  },
+  "POWER_GEM": {
+    "name": "Power Gem",
+    "type": "rock",
+    "archetype": "High Energy"
+  },
+  "POWER_UP_PUNCH": {
+    "name": "Power-Up Punch",
+    "type": "fighting",
+    "archetype": "Boost Spam/Bait"
+  },
+  "POWER_WHIP": {
+    "name": "Power Whip",
+    "type": "grass",
+    "archetype": "General"
+  },
+  "PRECIPICE_BLADES": {
+    "name": "Precipice Blades",
+    "type": "ground",
+    "archetype": "Nuke"
+  },
+  "PRESENT": {
+    "name": "Present",
+    "type": "normal",
+    "archetype": "Fast Charge"
+  },
+  "PSYBEAM": {
+    "name": "Psybeam",
+    "type": "psychic",
+    "archetype": "High Energy"
+  },
+  "PSYCHIC": {
+    "name": "Psychic",
+    "type": "psychic",
+    "archetype": "High Energy Debuff"
+  },
+  "PSYCHIC_FANGS": {
+    "name": "Psychic Fangs (Speculative)",
+    "type": "psychic",
+    "archetype": "Debuff Spam/Bait"
+  },
+  "PSYCHO_BOOST": {
+    "name": "Psycho Boost",
+    "type": "psychic",
+    "archetype": "Self-Debuff Spam"
+  },
+  "PSYCHO_CUT": {
+    "name": "Psycho Cut",
+    "type": "psychic",
+    "archetype": "Fast Charge"
+  },
+  "PSYSHOCK": { "name": "Psyshock", "type": "psychic", "archetype": "General" },
+  "PSYSTRIKE": {
+    "name": "Psystrike",
+    "type": "psychic",
+    "archetype": "General"
+  },
+  "QUICK_ATTACK": {
+    "name": "Quick Attack",
+    "type": "normal",
+    "archetype": "Fast Charge"
+  },
+  "RAZOR_LEAF": {
+    "name": "Razor Leaf",
+    "type": "grass",
+    "archetype": "Heavy Damage"
+  },
+  "RAZOR_SHELL": {
+    "name": "Razor Shell",
+    "type": "water",
+    "archetype": "Spam/Bait Debuff"
+  },
+  "REST": { "name": "Rest", "type": "normal", "archetype": "Spam/Bait" },
+  "RETURN": { "name": "Return", "type": "normal", "archetype": "Nuke" },
+  "ROCK_BLAST": {
+    "name": "Rock Blast",
+    "type": "rock",
+    "archetype": "Spam/Bait"
+  },
+  "ROCK_SLIDE": {
+    "name": "Rock Slide",
+    "type": "rock",
+    "archetype": "General"
+  },
+  "ROCK_SMASH": {
+    "name": "Rock Smash",
+    "type": "fighting",
+    "archetype": "Low Quality"
+  },
+  "ROCK_THROW": {
+    "name": "Rock Throw",
+    "type": "rock",
+    "archetype": "Heavy Damage"
+  },
+  "ROCK_TOMB": {
+    "name": "Rock Tomb",
+    "type": "rock",
+    "archetype": "High Energy"
+  },
+  "ROCK_WRECKER": {
+    "name": "Rock Wrecker",
+    "type": "rock",
+    "archetype": "General"
+  },
+  "SACRED_SWORD": {
+    "name": "Sacred Sword",
+    "type": "fighting",
+    "archetype": "Spam/Bait"
+  },
+  "SAND_TOMB": {
+    "name": "Sand Tomb",
+    "type": "ground",
+    "archetype": "Debuff Spam/Bait"
+  },
+  "SCALD": {
+    "name": "Scald",
+    "type": "water",
+    "archetype": "High Energy Debuff"
+  },
+  "SCALD_BLASTOISE": {
+    "name": "Scald Blastoise",
+    "type": "water",
+    "archetype": "High Energy"
+  },
+  "SCRATCH": {
+    "name": "Scratch",
+    "type": "normal",
+    "archetype": "Heavy Damage"
+  },
+  "SEED_BOMB": {
+    "name": "Seed Bomb",
+    "type": "grass",
+    "archetype": "Spam/Bait"
+  },
+  "SHADOW_BALL": {
+    "name": "Shadow Ball",
+    "type": "ghost",
+    "archetype": "Nuke"
+  },
+  "SHADOW_BONE": {
+    "name": "Shadow Bone",
+    "type": "ghost",
+    "archetype": "Debuff"
+  },
+  "SHADOW_CLAW": {
+    "name": "Shadow Claw",
+    "type": "ghost",
+    "archetype": "Multipurpose"
+  },
+  "SHADOW_PUNCH": {
+    "name": "Shadow Punch",
+    "type": "ghost",
+    "archetype": "Spam/Bait"
+  },
+  "SHADOW_SNEAK": {
+    "name": "Shadow Sneak",
+    "type": "ghost",
+    "archetype": "General"
+  },
+  "SIGNAL_BEAM": {
+    "name": "Signal Beam",
+    "type": "bug",
+    "archetype": "High Energy Debuff"
+  },
+  "SILVER_WIND": { "name": "Silver Wind", "type": "bug", "archetype": "Boost" },
+  "SKULL_BASH": {
+    "name": "Skull Bash",
+    "type": "normal",
+    "archetype": "Boost Nuke"
+  },
+  "SKY_ATTACK": {
+    "name": "Sky Attack",
+    "type": "flying",
+    "archetype": "General"
+  },
+  "SLUDGE": { "name": "Sludge", "type": "poison", "archetype": "Spam/Bait" },
+  "SLUDGE_BOMB": {
+    "name": "Sludge Bomb",
+    "type": "poison",
+    "archetype": "General"
+  },
+  "SLUDGE_WAVE": {
+    "name": "Sludge Wave",
+    "type": "poison",
+    "archetype": "Nuke"
+  },
+  "SMACK_DOWN": {
+    "name": "Smack Down",
+    "type": "rock",
+    "archetype": "Heavy Damage"
+  },
+  "SNARL": { "name": "Snarl", "type": "dark", "archetype": "Fast Charge" },
+  "SOLAR_BEAM": { "name": "Solar Beam", "type": "grass", "archetype": "Nuke" },
+  "SPARK": { "name": "Spark", "type": "electric", "archetype": "Fast Charge" },
+  "SPLASH": { "name": "Splash", "type": "water", "archetype": "Low Quality" },
+  "STEEL_WING": {
+    "name": "Steel Wing",
+    "type": "steel",
+    "archetype": "Heavy Damage"
+  },
+  "STOMP": { "name": "Stomp", "type": "normal", "archetype": "Spam/Bait" },
+  "STONE_EDGE": { "name": "Stone Edge", "type": "rock", "archetype": "Nuke" },
+  "STRUGGLE": {
+    "name": "Struggle",
+    "type": "normal",
+    "archetype": "High Energy"
+  },
+  "STRUGGLE_BUG": {
+    "name": "Struggle Bug",
+    "type": "bug",
+    "archetype": "Low Quality"
+  },
+  "SUBMISSION": {
+    "name": "Submission",
+    "type": "fighting",
+    "archetype": "General"
+  },
+  "SUCKER_PUNCH": {
+    "name": "Sucker Punch",
+    "type": "dark",
+    "archetype": "Fast Charge"
+  },
+  "SUPER_POWER": {
+    "name": "Superpower",
+    "type": "fighting",
+    "archetype": "Self-Debuff Spam"
+  },
+  "SURF": { "name": "Surf", "type": "water", "archetype": "Spam/Bait" },
+  "SWIFT": { "name": "Swift", "type": "normal", "archetype": "High Energy" },
+  "SYNCHRONOISE": {
+    "name": "Synchronoise",
+    "type": "psychic",
+    "archetype": "General"
+  },
+  "TACKLE": { "name": "Tackle", "type": "normal", "archetype": "Low Quality" },
+  "TAKE_DOWN": {
+    "name": "Take Down",
+    "type": "normal",
+    "archetype": "Low Quality"
+  },
+  "TECHNO_BLAST_NORMAL": {
+    "name": "Techno Blast (Normal)",
+    "type": "normal",
+    "archetype": "Nuke"
+  },
+  "TECHNO_BLAST_BURN": {
+    "name": "Techno Blast (Burn)",
+    "type": "fire",
+    "archetype": "Nuke"
+  },
+  "TECHNO_BLAST_CHILL": {
+    "name": "Techno Blast (Chill)",
+    "type": "ice",
+    "archetype": "Nuke"
+  },
+  "TECHNO_BLAST_DOUSE": {
+    "name": "Techno Blast (Douse)",
+    "type": "water",
+    "archetype": "Nuke"
+  },
+  "TECHNO_BLAST_SHOCK": {
+    "name": "Techno Blast (Shock)",
+    "type": "electric",
+    "archetype": "Nuke"
+  },
+  "THUNDER": {
+    "name": "Thunder",
+    "type": "electric",
+    "archetype": "High Energy"
+  },
+  "THUNDER_FANG": {
+    "name": "Thunder Fang",
+    "type": "electric",
+    "archetype": "Heavy Damage"
+  },
+  "THUNDER_PUNCH": {
+    "name": "Thunder Punch",
+    "type": "electric",
+    "archetype": "Spam/Bait"
+  },
+  "THUNDER_SHOCK": {
+    "name": "Thunder Shock",
+    "type": "electric",
+    "archetype": "Fast Charge"
+  },
+  "THUNDERBOLT": {
+    "name": "Thunderbolt",
+    "type": "electric",
+    "archetype": "High Energy"
+  },
+  "TRANSFORM": {
+    "name": "Transform",
+    "type": "normal",
+    "archetype": "Special"
+  },
+  "TRI_ATTACK": {
+    "name": "Tri Attack",
+    "type": "normal",
+    "archetype": "Debuff"
+  },
+  "TWISTER": { "name": "Twister", "type": "dragon", "archetype": "General" },
+  "V_CREATE": {
+    "name": "V-Create",
+    "type": "fire",
+    "archetype": "Self-Debuff Spam"
+  },
+  "VICE_GRIP": {
+    "name": "Vise Grip",
+    "type": "normal",
+    "archetype": "Spam/Bait"
+  },
+  "VINE_WHIP": {
+    "name": "Vine Whip",
+    "type": "grass",
+    "archetype": "Fast Charge"
+  },
+  "VOLT_SWITCH": {
+    "name": "Volt Switch",
+    "type": "electric",
+    "archetype": "Multipurpose"
+  },
+  "WATER_GUN": { "name": "Water Gun", "type": "water", "archetype": "General" },
+  "WATER_GUN_FAST_BLASTOISE": {
+    "name": "Water Gun Fast Blastoise",
+    "type": "water",
+    "archetype": "Low Quality"
+  },
+  "WATER_PULSE": {
+    "name": "Water Pulse",
+    "type": "water",
+    "archetype": "High Energy"
+  },
+  "WATERFALL": {
+    "name": "Waterfall",
+    "type": "water",
+    "archetype": "Heavy Damage"
+  },
+  "WEATHER_BALL_FIRE": {
+    "name": "Weather Ball (Fire)",
+    "type": "fire",
+    "archetype": "Spam/Bait"
+  },
+  "WEATHER_BALL_ICE": {
+    "name": "Weather Ball (Ice)",
+    "type": "ice",
+    "archetype": "Spam/Bait"
+  },
+  "WEATHER_BALL_ROCK": {
+    "name": "Weather Ball (Rock)",
+    "type": "rock",
+    "archetype": "Spam/Bait"
+  },
+  "WEATHER_BALL_NORMAL": {
+    "name": "Weather Ball (Normal)",
+    "type": "normal",
+    "archetype": "Spam/Bait"
+  },
+  "WEATHER_BALL_WATER": {
+    "name": "Weather Ball (Water)",
+    "type": "water",
+    "archetype": "Spam/Bait"
+  },
+  "WILD_CHARGE": {
+    "name": "Wild Charge",
+    "type": "electric",
+    "archetype": "Self-Debuff"
+  },
+  "WING_ATTACK": {
+    "name": "Wing Attack",
+    "type": "flying",
+    "archetype": "Fast Charge"
+  },
+  "WRAP": { "name": "Wrap", "type": "normal", "archetype": "General" },
+  "WRAP_GREEN": {
+    "name": "Wrap Green",
+    "type": "normal",
+    "archetype": "General"
+  },
+  "WRAP_PINK": {
+    "name": "Wrap Pink",
+    "type": "normal",
+    "archetype": "General"
+  },
+  "X_SCISSOR": { "name": "X-Scissor", "type": "bug", "archetype": "Spam/Bait" },
+  "YAWN": { "name": "Yawn", "type": "normal", "archetype": "Low Quality" },
+  "ZAP_CANNON": {
+    "name": "Zap Cannon",
+    "type": "electric",
+    "archetype": "Debuff Nuke"
+  },
+  "ZEN_HEADBUTT": {
+    "name": "Zen Headbutt",
+    "type": "psychic",
+    "archetype": "Low Quality"
+  }
+}

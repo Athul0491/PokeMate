@@ -1,7 +1,8 @@
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemate/models/pokemon_common.dart';
+import 'package:pokemate/models/pokemon_db.dart';
+import 'package:pokemate/models/pokemon_pvp.dart';
 import 'package:pokemate/models/user.dart';
 import 'package:pokemate/models/wild_pokemon.dart';
 import 'package:pokemate/repositories/api_repository.dart';
@@ -17,11 +18,13 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
   OCRRepository ocrRepository = OCRRepository();
   APIRepository apiRepository = APIRepository();
   PokemonJSON pokemonJSON;
+  PVPMovesJSON pvpMovesJSON;
 
   DatabaseBloc({
     required this.userData,
     required this.databaseRepository,
     required this.pokemonJSON,
+    required this.pvpMovesJSON,
   }) : super(Fetching()) {
     on<GetRaidBossInfo>(_onGetRaidBossInfo);
     on<GetPVPInfoFromImage>(_onGetPVPInfoFromImage);
@@ -68,7 +71,7 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
     }
     // Image Processing and OCR
     try {
-      // Preprocess image for OCR on separate Isolate
+      // Preprocess image for OCR on separate Isolate/Thread
       await compute(OCRRepository.processImage, event.image.path);
       // Run OCR on file
       name = await ocrRepository.extractPokemonName(event.image.path);
@@ -79,7 +82,35 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
   }
 
   Future<void> _onGetPVPInfoFromAPI(
-      GetPVPInfoFromAPI event, Emitter<DatabaseState> emit) async {}
+      GetPVPInfoFromAPI event, Emitter<DatabaseState> emit) async {
+    emit(Fetching());
+    try {
+      int pokemonId = pokemonJSON.getID(event.name);
+      var ivData =
+          await apiRepository.getPVPIVInfo(event.name, event.ivs, event.league);
+      var pvpData =
+          await apiRepository.getLeaguePVPInfo(event.name, event.league);
+      var pokemonData = await apiRepository.getPVPDetails(pokemonId);
+      if (pokemonData != null && pvpData != null && ivData != null) {
+        PokemonPVP pokemon = PokemonPVP.fromAPI(
+          name: event.name,
+          ivs: event.ivs,
+          league: event.league,
+          pokemonData: pokemonData,
+          pvpData: pvpData,
+          ivData: ivData,
+          pokemonJSON: pokemonJSON,
+          pvpMovesJSON: pvpMovesJSON,
+        );
+        print(pokemon);
+        emit(PVPRaterPageState(pokemon));
+      } else {
+        emit(const FetchFailed('API failed'));
+      }
+    } on Exception catch (e) {
+      emit(FetchFailed('Exception Occurred: $e'));
+    }
+  }
 
   Future<void> _onGetWildPokemonInfoFromImage(
       GetWildPokemonInfoFromImage event, Emitter<DatabaseState> emit) async {
@@ -98,24 +129,38 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
     } on Exception catch (_) {
       errorOccurred = true;
     }
-    emit(WildPokemonFormState(name: name, cp: cp, errorOccurred: errorOccurred));
+    emit(
+        WildPokemonFormState(name: name, cp: cp, errorOccurred: errorOccurred));
   }
 
   Future<void> _onGetWildPokemonInfoFromAPI(
       GetWildPokemonInfoFromAPI event, Emitter<DatabaseState> emit) async {
-    int id = pokemonJSON.getID(event.name);
-    var res = await apiRepository.getWildPokemonInfo(id);
-    if(res!=null){
-      WildPokemon pokemon = WildPokemon.fromAPI(name: event.name, cp: event.cp, data: res);
-      print(pokemon);
-    } else {
-      print('Bruh');
+    emit(Fetching());
+    try {
+      int id = pokemonJSON.getID(event.name);
+      var res = await apiRepository.getWildPokemonInfo(id);
+      if (res != null) {
+        WildPokemon pokemon =
+            WildPokemon.fromAPI(name: event.name, cp: event.cp, data: res);
+        print(pokemon);
+        emit(WildPokemonPageState(pokemon));
+      } else {
+        emit(const FetchFailed('API failed'));
+      }
+    } on Exception catch (e) {
+      emit(FetchFailed('Exception Occurred: $e'));
     }
   }
 
   Future<void> _onGetMyPokemons(
       GetMyPokemons event, Emitter<DatabaseState> emit) async {
-
+    emit(Fetching());
+    try {
+      List<PokemonDB> list = await databaseRepository.getPokemons();
+      // emit()
+    } on Exception catch (e) {
+      // TODO
+    }
   }
 
   Future<void> _onAddPokemon(

@@ -6,7 +6,7 @@ class APIRepository {
   final Client _client = Client();
   String url = 'pokemate01.herokuapp.com';
 
-  void getLeaguePVPInfo(String name, String league) async {
+  Future<Map<String, dynamic>?> getLeaguePVPInfo(String name, String league) async {
     Response response = await _client.get(
       Uri.https(
         url,
@@ -16,17 +16,7 @@ class APIRepository {
         },
       ),
     );
-    Map data = jsonDecode(response.body);
-    print(data);
-  }
-
-  Future<Map<String, dynamic>?> getWildPokemonInfo(int id) async {
-    Response response = await _client.get(Uri.https(
-      url,
-      '/api/wild',
-      {'id': id.toString()},
-    ));
-    if(response.statusCode==200){
+    if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       print(data);
       return data;
@@ -35,10 +25,67 @@ class APIRepository {
     }
   }
 
-  void getPVPInfo() {}
+  Future<Map<String, dynamic>?> getPVPIVInfo(
+      String name, List<int> ivs, String league) async {
+    switch (league) {
+      case 'great':
+        league = '0';
+        break;
+      case 'ultra':
+        league = '1';
+        break;
+      case 'master':
+        league = '2';
+        break;
+    }
+    Response response = await _client.get(Uri.https(
+      url,
+      '/api/pvp-iv',
+      {
+        "name": name.capitalize(),
+        "attack": ivs[0].toString(),
+        "defence": ivs[1].toString(),
+        "hp": ivs[2].toString(),
+        "league": league
+      },
+    ));
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      print(data);
+      return data;
+    } else {
+      return null;
+    }
+  }
 
-  String getPokemonImage(String name) {
-    return '';
+  Future<Map<String, dynamic>?> getPVPDetails(int id) async {
+    Response response = await _client.get(Uri.https(
+      url,
+      '/api/pvp-details',
+      {'id': id.toString()},
+    ));
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      print(data);
+      return data;
+    } else {
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>?> getWildPokemonInfo(int id) async {
+    Response response = await _client.get(Uri.https(
+      url,
+      '/api/wild',
+      {'id': id.toString()},
+    ));
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      print(data);
+      return data;
+    } else {
+      return null;
+    }
   }
 }
 

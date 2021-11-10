@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:pokemate/models/pokemon_pvp.dart';
 import 'package:pokemate/shared/shared_methods.dart';
 
 class PokemonType {
@@ -28,13 +29,15 @@ class PokemonType {
 
   const PokemonType._(this.name, this.color);
 
-  PokemonType(this.name) : color = colorMap[name] ?? Colors.red;
+  PokemonType(String name)
+      : color = colorMap[name] ?? Colors.red,
+        name = name.capitalize();
 
   const PokemonType.empty() : this._('empty', Colors.red);
 
   @override
   String toString() {
-    return name.capitalize();
+    return name;
   }
 }
 
@@ -56,11 +59,34 @@ class TypeEffect {
 class PokemonJSON {
   final Map<String, dynamic> data;
 
-  PokemonJSON(BuildContext context, String dataStr)
-      : data = jsonDecode(dataStr);
+  PokemonJSON(String dataStr) : data = jsonDecode(dataStr);
 
   int getID(String name) {
     return data[name.toLowerCase()]['id'] as int;
+  }
+
+  List<PokemonType> getTypes(String name) {
+    return [
+      for (String type in data[name.toLowerCase()]['types']) PokemonType(type)
+    ];
+  }
+
+  String getImage(String name) {
+    return data[name.toLowerCase()]['image'] as String;
+  }
+}
+
+class PVPMovesJSON {
+  final Map<String, dynamic> data;
+
+  PVPMovesJSON(String dataStr) : data = jsonDecode(dataStr);
+
+  PVPMove getMoveSet(String id) {
+    return PVPMove(
+      name: data[id]['name'],
+      type: PokemonType(data[id]['type']),
+      archetype: data[id]['archetype'],
+    );
   }
 }
 

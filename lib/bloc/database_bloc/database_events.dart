@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
+import 'package:pokemate/models/pokemon_db.dart';
 
 abstract class DatabaseEvent extends Equatable {
   const DatabaseEvent();
@@ -25,9 +26,18 @@ class GetPVPInfoFromImage extends DatabaseEvent {
 }
 
 class GetPVPInfoFromAPI extends DatabaseEvent {
+  final String name;
+  final List<int> ivs;
+  final String league;
+
+  const GetPVPInfoFromAPI({
+    required this.name,
+    required this.ivs,
+    required this.league,
+  });
+
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [name, ivs, league];
 }
 
 class GetWildPokemonInfoFromImage extends DatabaseEvent {
@@ -51,24 +61,32 @@ class GetWildPokemonInfoFromAPI extends DatabaseEvent {
 
 class GetMyPokemons extends DatabaseEvent {
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [];
 }
 
 class AddPokemon extends DatabaseEvent {
+  final PokemonDB pokemon;
+
+  const AddPokemon(this.pokemon);
+
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [pokemon];
 }
 
 class UpdatePokemon extends DatabaseEvent {
+  final PokemonDB pokemon;
+
+  const UpdatePokemon(this.pokemon);
+
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [pokemon];
 }
 
 class DeletePokemon extends DatabaseEvent {
+  final PokemonDB pokemon;
+
+  const DeletePokemon(this.pokemon);
+
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [pokemon];
 }

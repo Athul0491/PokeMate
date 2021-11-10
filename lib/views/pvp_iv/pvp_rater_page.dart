@@ -2,33 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemate/bloc/database_bloc/database_bloc.dart';
 import 'package:pokemate/bloc/database_bloc/database_bloc_files.dart';
-import 'package:pokemate/models/wild_pokemon.dart';
+import 'package:pokemate/models/pokemon_pvp.dart';
 import 'package:pokemate/shared/loading.dart';
 import 'package:pokemate/themes/theme_notifiers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class WildPokemonPage extends StatefulWidget {
+class PVPRaterPage extends StatefulWidget {
   final String name;
-  final int cp;
+  final List<int> ivs;
+  final String league;
 
-  const WildPokemonPage({Key? key, required this.name, required this.cp})
-      : super(key: key);
+  const PVPRaterPage({
+    Key? key,
+    required this.name,
+    required this.ivs,
+    required this.league,
+  }) : super(key: key);
 
   @override
-  _WildPokemonPageState createState() => _WildPokemonPageState();
+  _PVPRaterPageState createState() => _PVPRaterPageState();
 }
 
-class _WildPokemonPageState extends State<WildPokemonPage> {
-  late WildPokemon pokemon;
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class _PVPRaterPageState extends State<PVPRaterPage> {
+  late PokemonPVP pokemon;
 
   @override
   void initState() {
     super.initState();
     context
         .read<DatabaseBloc>()
-        .add(GetWildPokemonInfoFromAPI(name: widget.name, cp: widget.cp));
+        .add(GetPVPInfoFromAPI(name: widget.name, ivs: widget.ivs, league: widget.league));
   }
 
   @override
@@ -49,7 +52,7 @@ class _WildPokemonPageState extends State<WildPokemonPage> {
           width: MediaQuery.of(context).size.width,
           child: BlocConsumer<DatabaseBloc, DatabaseState>(
             listener: (context, state) async {
-              if (state is WildPokemonPageState) {
+              if (state is PVPRaterPageState) {
                 pokemon = state.pokemon;
               }
             },
@@ -69,7 +72,7 @@ class _WildPokemonPageState extends State<WildPokemonPage> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: colors.accent),
                     child: Text(
-                      'Next',
+                      'Save',
                       style: TextStyle(
                         fontSize: 20,
                         color: colors.onAccent,

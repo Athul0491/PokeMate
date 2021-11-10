@@ -1,16 +1,15 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pokemate/bloc/app_bloc/app_bloc.dart';
 import 'package:pokemate/bloc/app_bloc/app_bloc_files.dart';
 import 'package:pokemate/models/pokemon_common.dart';
 import 'package:pokemate/themes/theme_notifiers.dart';
-import 'package:pokemate/views/pvp_iv/pvp_iv_form.dart';
+import 'package:pokemate/views/pvp_iv/pvp_rater_form.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pokemate/views/testing_page.dart';
 import 'package:pokemate/views/wild_pokemon/wild_pokemon_form.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -92,22 +91,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               onPressed: () async {
-                Client _client = Client();
-                Response response = await _client.get(Uri.https(
-                  'pokemate01.herokuapp.com',
-                  '/api/pvp',
-                  {'id': '6'},
-                ));
-                print(response.body);
-                // Response response = await _client.get(Uri.https(
-                //   'pokemate01.herokuapp.com',
-                //   '/api/raid',
-                // ));
-                if(response.statusCode==200){
-                  var data = jsonDecode(response.body);
-                  print(data);
-                }
-
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TestScreen(),
+                    ));
+                //   Client _client = Client();
+                //   Response response = await _client.get(Uri.https(
+                //     'pokemate01.herokuapp.com',
+                //     '/api/pvp-iv',
+                //     {
+                //       "name": "Charizard",
+                //       "attack": "10",
+                //       "defence": "1",
+                //       "hp": "11",
+                //       "league": "0"
+                //     },
+                //   ));
+                //   print(response.body);
+                //   // Response response = await _client.get(Uri.https(
+                //   //   'pokemate01.herokuapp.com',
+                //   //   '/api/raid',
+                //   // ));
+                //   if (response.statusCode == 200) {
+                //     var data = jsonDecode(response.body);
+                //     print(data);
+                //   }
+                // },
               },
             ),
             ElevatedButton(

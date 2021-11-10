@@ -5,43 +5,41 @@ class PokemonDB {
   String name;
   List<int> ivs;
   int cp;
-  PokemonType type1;
-  PokemonType type2;
+  List<PokemonType> types;
   String imageURL;
 
   PokemonDB(
       {this.id = '',
-        this.name = '',
-        this.ivs = const [0, 0, 0],
-        this.cp = 0,
-        this.type1 = const PokemonType.empty(),
-        this.type2 = const PokemonType.empty(),
-        this.imageURL = ''});
+      this.name = '',
+      this.ivs = const [0, 0, 0],
+      this.cp = 0,
+      this.types = const [],
+      this.imageURL = ''});
 
   PokemonDB.fromJson(Map<String, Object?> json, String id)
       : this(
-    id: id,
-    name: json['name']! as String,
-    ivs: json['ivs']! as List<int>,
-    cp: json['cp']! as int,
-    type1: PokemonType(json['type1'] as String),
-    type2: PokemonType(json['type2'] as String),
-    imageURL: json['imageURL']! as String,
-  );
+          id: id,
+          name: json['name']! as String,
+          ivs: json['ivs']! as List<int>,
+          cp: json['cp']! as int,
+          types: [
+            for (var type in json['types']! as List<String>) PokemonType(type)
+          ],
+          imageURL: json['imageURL']! as String,
+        );
 
   Map<String, Object?> toJson() {
     return {
       'name': name,
       'ivs': ivs,
       'cp': cp,
-      'type1': type1,
-      'type2': type2,
+      'types': [for (PokemonType type in types) type.name],
       'imageURL': imageURL,
     };
   }
 
   @override
   String toString() {
-    return '$name, IVS: $ivs, CP$cp, $type1-$type2';
+    return '$name, IVS: $ivs, CP$cp, $types';
   }
 }

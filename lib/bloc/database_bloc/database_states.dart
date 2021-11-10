@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:pokemate/models/pokemon_pvp.dart';
+import 'package:pokemate/models/wild_pokemon.dart';
 
 abstract class DatabaseState extends Equatable {
   const DatabaseState();
@@ -34,8 +36,11 @@ class PVPRaterFormState extends DatabaseState {
 }
 
 class PVPRaterPageState extends DatabaseState {
+  final PokemonPVP pokemon;
+
+  const PVPRaterPageState(this.pokemon);
+
   @override
-  // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
 }
 
@@ -55,13 +60,25 @@ class WildPokemonFormState extends DatabaseState {
 }
 
 class WildPokemonPageState extends DatabaseState {
+  final WildPokemon pokemon;
+
+  const WildPokemonPageState(this.pokemon);
+
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [pokemon];
 }
 
 class MyPokemonPageState extends DatabaseState {
   @override
   // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
+}
+
+class FetchFailed extends DatabaseState {
+  final String errorMessage;
+
+  const FetchFailed(this.errorMessage);
+
+  @override
+  List<Object?> get props => [errorMessage];
 }
