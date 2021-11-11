@@ -62,6 +62,7 @@ class PokemonJSON {
   PokemonJSON(String dataStr) : data = jsonDecode(dataStr);
 
   int getID(String name) {
+    print(name);
     return data[name.toLowerCase()]['id'] as int;
   }
 

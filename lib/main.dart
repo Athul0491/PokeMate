@@ -55,7 +55,7 @@ class _FlutterFireInitState extends State<FlutterFireInit> {
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
-        return const MaterialApp(home: Loading());
+        return const LoadingPage();
       },
     );
   }

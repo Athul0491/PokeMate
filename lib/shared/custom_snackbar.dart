@@ -16,7 +16,7 @@ SnackBar showCustomSnackBar(BuildContext context, String message) {
         Text(
           message,
           style: TextStyle(
-            fontSize: 15,
+            fontSize: 16,
             color: colors.t1,
             fontWeight: FontWeight.w400,
           ),

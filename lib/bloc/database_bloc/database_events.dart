@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:pokemate/models/pokemon_db.dart';
 
 abstract class DatabaseEvent extends Equatable {
@@ -11,9 +12,12 @@ abstract class DatabaseEvent extends Equatable {
 }
 
 class GetRaidBossInfo extends DatabaseEvent {
+  final BuildContext context;
+
+  const GetRaidBossInfo(this.context);
+
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [];
 }
 
 class GetPVPInfoFromImage extends DatabaseEvent {

@@ -87,6 +87,20 @@ class APIRepository {
       return null;
     }
   }
+
+  Future<Map<String, dynamic>?> getRaidBossInfo() async {
+    Response response = await _client.get(Uri.https(
+      url,
+      '/api/raid',
+    ));
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      print(data);
+      return data;
+    } else {
+      return null;
+    }
+  }
 }
 
 // Client _client = Client();

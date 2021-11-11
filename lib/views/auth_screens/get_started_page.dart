@@ -28,7 +28,7 @@ class _GetStartedPageState extends State<GetStartedPage> {
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(colors.bgImage), fit: BoxFit.cover),
+                image: AssetImage(colors.bgImagePath), fit: BoxFit.cover),
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,

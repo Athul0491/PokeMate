@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemate/models/pokemon_common.dart';
 import 'package:pokemate/models/pokemon_db.dart';
 import 'package:pokemate/models/pokemon_pvp.dart';
+import 'package:pokemate/models/raid_boss.dart';
 import 'package:pokemate/models/user.dart';
 import 'package:pokemate/models/wild_pokemon.dart';
 import 'package:pokemate/repositories/api_repository.dart';
@@ -17,15 +19,26 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
   TensorflowRepository tensorflowRepository = TensorflowRepository();
   OCRRepository ocrRepository = OCRRepository();
   APIRepository apiRepository = APIRepository();
-  PokemonJSON pokemonJSON;
-  PVPMovesJSON pvpMovesJSON;
+  late PokemonJSON pokemonJSON;
+  late PVPMovesJSON pvpMovesJSON;
 
   DatabaseBloc({
     required this.userData,
     required this.databaseRepository,
-    required this.pokemonJSON,
-    required this.pvpMovesJSON,
-  }) : super(Fetching()) {
+    required BuildContext tempContext,
+  }) : super(Init()) {
+    DefaultAssetBundle.of(tempContext)
+        .loadString("assets/pokemon.json")
+        .then((value) {
+      pokemonJSON = PokemonJSON(value);
+      print('Pokemon JSON loaded');
+    });
+    DefaultAssetBundle.of(tempContext)
+        .loadString("assets/moves.json")
+        .then((value) {
+      pvpMovesJSON = PVPMovesJSON(value);
+      print('Moves JSON loaded');
+    });
     on<GetRaidBossInfo>(_onGetRaidBossInfo);
     on<GetPVPInfoFromImage>(_onGetPVPInfoFromImage);
     on<GetPVPInfoFromAPI>(_onGetPVPInfoFromAPI);
@@ -38,16 +51,33 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
   }
 
   Future<void> _onGetRaidBossInfo(
-      GetRaidBossInfo event, Emitter<DatabaseState> emit) async {}
+      GetRaidBossInfo event, Emitter<DatabaseState> emit) async {
+    emit(const HomePageState(pageState: PageState.loading));
+    // PokemonJSON pokemonJSON2 = PokemonJSON(await DefaultAssetBundle.of(event.context)
+    //     .loadString("assets/pokemon.json"));
+    var raidBossData = await apiRepository.getRaidBossInfo();
+    if (raidBossData != null) {
+      List<RaidBoss> raidBossList = [];
+      for (var raidBoss in raidBossData['raid_table']) {
+        raidBossList.add(RaidBoss.fromAPI(
+          raidBossData: raidBoss,
+          pokemonJSON: pokemonJSON,
+        ));
+      }
+      emit(HomePageState(raidBossList: raidBossList, pageState: PageState.success));
+    } else {
+      emit(const HomePageState(pageState: PageState.error));
+    }
+  }
 
   Future<void> _onGetPVPInfoFromImage(
       GetPVPInfoFromImage event, Emitter<DatabaseState> emit) async {
-    List<int> ivs = [0, 0, 0];
+    List<int> ivs = [];
     String name = '';
-    bool errorOccurred = false;
+    PageState pageState = PageState.success;
     // TensorFlow Object Detection for IVs
     try {
-      emit(Fetching());
+      emit(const PVPRaterFormState(pageState: PageState.loading));
       // Load TensorFlow Model
       await tensorflowRepository.loadModel();
       // Run TFLite model
@@ -64,10 +94,10 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
               int.tryParse((re['detectedClass'] as String).substring(2)) ?? 0);
         }
       } else {
-        errorOccurred = true;
+        pageState = PageState.error;
       }
     } on Exception catch (_) {
-      errorOccurred = true;
+      pageState = PageState.error;
     }
     // Image Processing and OCR
     try {
@@ -76,14 +106,14 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
       // Run OCR on file
       name = await ocrRepository.extractPokemonName(event.image.path);
     } on Exception catch (_) {
-      errorOccurred = true;
+      pageState = PageState.error;
     }
-    emit(PVPRaterFormState(ivs: ivs, name: name, errorOccurred: errorOccurred));
+    emit(PVPRaterFormState(ivs: ivs, name: name, pageState: pageState));
   }
 
   Future<void> _onGetPVPInfoFromAPI(
       GetPVPInfoFromAPI event, Emitter<DatabaseState> emit) async {
-    emit(Fetching());
+    emit(const PVPRaterPageState(pageState: PageState.loading));
     try {
       int pokemonId = pokemonJSON.getID(event.name);
       var ivData =
@@ -103,21 +133,20 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
           pvpMovesJSON: pvpMovesJSON,
         );
         print(pokemon);
-        emit(PVPRaterPageState(pokemon));
+        emit(PVPRaterPageState(pokemon: pokemon, pageState: PageState.success));
       } else {
-        emit(const FetchFailed('API failed'));
+        emit(const PVPRaterPageState(pageState: PageState.error));
       }
-    } on Exception catch (e) {
-      emit(FetchFailed('Exception Occurred: $e'));
+    } on Exception catch (_) {
+      emit(const PVPRaterPageState(pageState: PageState.error));
     }
   }
 
   Future<void> _onGetWildPokemonInfoFromImage(
       GetWildPokemonInfoFromImage event, Emitter<DatabaseState> emit) async {
-    emit(Fetching());
+    emit(const WildPokemonFormState(pageState: PageState.loading));
     String name = '';
     int cp = 0;
-    bool errorOccurred = false;
     // Image Processing and OCR
     try {
       // Preprocess image for OCR on separate Isolate
@@ -126,16 +155,15 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
       var res = await ocrRepository.extractNameAndCP(event.image.path);
       name = res['name'];
       cp = int.tryParse(res['cp']) ?? 0;
+      emit(WildPokemonFormState(name: name, cp: cp, pageState: PageState.success));
     } on Exception catch (_) {
-      errorOccurred = true;
+      emit(const WildPokemonFormState(pageState: PageState.error));
     }
-    emit(
-        WildPokemonFormState(name: name, cp: cp, errorOccurred: errorOccurred));
   }
 
   Future<void> _onGetWildPokemonInfoFromAPI(
       GetWildPokemonInfoFromAPI event, Emitter<DatabaseState> emit) async {
-    emit(Fetching());
+    emit(const WildPokemonPageState(pageState: PageState.loading));
     try {
       int id = pokemonJSON.getID(event.name);
       var res = await apiRepository.getWildPokemonInfo(id);
@@ -143,23 +171,23 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
         WildPokemon pokemon =
             WildPokemon.fromAPI(name: event.name, cp: event.cp, data: res);
         print(pokemon);
-        emit(WildPokemonPageState(pokemon));
+        emit(WildPokemonPageState(pokemon: pokemon, pageState: PageState.success));
       } else {
-        emit(const FetchFailed('API failed'));
+        emit(const WildPokemonPageState(pageState: PageState.error));
       }
-    } on Exception catch (e) {
-      emit(FetchFailed('Exception Occurred: $e'));
+    } on Exception catch (_) {
+      emit(const WildPokemonPageState(pageState: PageState.error));
     }
   }
 
   Future<void> _onGetMyPokemons(
       GetMyPokemons event, Emitter<DatabaseState> emit) async {
-    emit(Fetching());
+    emit(const MyPokemonPageState(pageState: PageState.loading));
     try {
       List<PokemonDB> list = await databaseRepository.getPokemons();
       // emit()
-    } on Exception catch (e) {
-      // TODO
+    } on Exception catch (_) {
+      emit(const MyPokemonPageState(pageState: PageState.loading));
     }
   }
 

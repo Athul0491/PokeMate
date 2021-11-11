@@ -15,13 +15,13 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final colors = context.read<ThemeNotifier>();
+    var colors = context.read<ThemeNotifier>();
     return Scaffold(
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 25.w),
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(colors.bgImage),
+              image: AssetImage(colors.bgImagePath),
               fit: BoxFit.cover),
         ),
         height: MediaQuery.of(context).size.height,
@@ -34,7 +34,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 fontSize: 30,
               ),
             ),
-            _buildTheme(colors),
             ElevatedButton(
               style: ElevatedButton.styleFrom(primary: colors.accent),
               child: Text(
@@ -66,21 +65,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  SwitchListTile _buildTheme(ThemeNotifier themeNotifier) {
-    return SwitchListTile(
-      title: const Text(
-        'Dark Theme',
-        style: TextStyle(fontSize: 21, fontWeight: FontWeight.w400),
-      ),
-      value: themeNotifier.isDarkMode,
-      onChanged: (bool newValue) async {
-        setState(() {
-          themeNotifier.setTheme(newValue);
-        });
-      },
     );
   }
 }

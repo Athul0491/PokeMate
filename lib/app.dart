@@ -4,12 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pokemate/bloc/app_bloc/app_bloc.dart';
 import 'package:pokemate/bloc/app_bloc/app_bloc_files.dart';
 import 'package:pokemate/bloc/database_bloc/database_bloc.dart';
-import 'package:pokemate/models/pokemon_common.dart';
 import 'package:pokemate/models/user.dart';
 import 'package:pokemate/repositories/auth_repository.dart';
 import 'package:pokemate/repositories/database_repository.dart';
 import 'package:pokemate/shared/error_screen.dart';
-import 'package:pokemate/shared/loading.dart';
 import 'package:pokemate/themes/theme_notifiers.dart';
 import 'package:pokemate/wrapper.dart';
 import 'package:provider/provider.dart';
@@ -22,16 +20,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  late String pokemonJsonStr;
-  late String pvpMoveJsonStr;
-
-  Future loadAssets() async {
-    pokemonJsonStr =
-        await DefaultAssetBundle.of(context).loadString("assets/pokemon.json");
-    pvpMoveJsonStr =
-        await DefaultAssetBundle.of(context).loadString("assets/moves.json");
-  }
-
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider<AuthRepository>(
@@ -43,14 +31,8 @@ class _AppState extends State<App> {
           appBloc.add(AppStarted());
           return appBloc;
         },
-        child: FutureBuilder(
-          // To load the pokemon.json file and passing it to bloc
-          future: loadAssets(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState != ConnectionState.done) {
-              return const MaterialApp(home: Loading());
-            }
-            print('fuck you');
+        child: Builder(
+          builder: (context) {
             return BlocBuilder<AppBloc, AppState>(
               builder: (context, state) {
                 return BlocProvider<DatabaseBloc>(
@@ -59,8 +41,7 @@ class _AppState extends State<App> {
                     return DatabaseBloc(
                       userData: userData,
                       databaseRepository: DatabaseRepository(uid: userData.uid),
-                      pokemonJSON: PokemonJSON(pokemonJsonStr),
-                      pvpMovesJSON: PVPMovesJSON(pvpMoveJsonStr),
+                      tempContext: context,
                     );
                   },
                   child: ScreenUtilInit(

@@ -21,8 +21,6 @@ class WildPokemonPage extends StatefulWidget {
 class _WildPokemonPageState extends State<WildPokemonPage> {
   late WildPokemon pokemon;
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   @override
   void initState() {
     super.initState();
@@ -41,7 +39,7 @@ class _WildPokemonPageState extends State<WildPokemonPage> {
           padding: EdgeInsets.symmetric(horizontal: 25.w),
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(colors.bgImage),
+              image: AssetImage(colors.bgImagePath),
               fit: BoxFit.cover,
             ),
           ),
@@ -50,12 +48,17 @@ class _WildPokemonPageState extends State<WildPokemonPage> {
           child: BlocConsumer<DatabaseBloc, DatabaseState>(
             listener: (context, state) async {
               if (state is WildPokemonPageState) {
-                pokemon = state.pokemon;
+                if (state.pageState == PageState.success) {
+                  pokemon = state.pokemon!;
+                }
               }
             },
             builder: (context, state) {
-              if (state is Fetching) {
-                return const Center(child: LoadingSmall(size: 100));
+              if (state is WildPokemonPageState) {
+                if (state.pageState == PageState.loading) {
+                  return const Loading();
+                }
+                // TODO error handling
               }
               return Column(
                 children: [

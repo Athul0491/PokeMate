@@ -31,8 +31,14 @@ class ThemeNotifier with ChangeNotifier {
   Color get onAccent =>
       isDarkMode ? const Color(0xFFFFFFFF) : const Color(0xFFFFFFFF);
 
-  String get bgImage =>
+  String get bgImagePath =>
       isDarkMode ? 'assets/dark_bg.png' : 'assets/light_bg.png';
+
+  DecorationImage get bgImage => isDarkMode
+      ? const DecorationImage(
+      image: AssetImage('assets/dark_bg.png'), fit: BoxFit.cover)
+      :  const DecorationImage(
+      image: AssetImage('assets/light_bg.png'), fit: BoxFit.cover);
 
   ThemeNotifier(this.isDarkMode);
 

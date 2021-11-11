@@ -26,7 +26,7 @@ class WildPokemon {
   }) {
     types = [];
     for (int i = 0; i < (data['Types'] as List).length; i++) {
-      types.add(PokemonType(data['Types'][i]['0']));
+      types.add(PokemonType(data['Types'][i]['$i']));
     }
     weakness = [];
     for (var type in data['Vulnerable']) {
@@ -64,7 +64,7 @@ class WildPokemon {
         double.tryParse(e[2]) ?? 0
       ]);
     }
-    estimatedLevel = getEstimatedLevel()[0]+' - '+getEstimatedLevel()[1];
+    estimatedLevel = getEstimatedLevel()[0] + ' - ' + getEstimatedLevel()[1];
   }
 
   @override
@@ -109,21 +109,42 @@ class WildPokemon {
         i = mid + 1;
       }
     }
-    // Only single element left after search
     return arr[mid];
+  }
+
+  int binarySearch(arr, val) {
+    int start = 0;
+    int end = arr.length - 1;
+    while (start <= end) {
+      int mid = (start + end) ~/ 2;
+      if (arr[mid] == val) {
+        return mid;
+      }
+      if (val < arr[mid]) {
+        end = mid - 1;
+      } else {
+        start = mid + 1;
+      }
+    }
+    return -1;
   }
 
   List<String> getEstimatedLevel() {
     List<double> left = [];
     List<double> right = [];
+    List<double> level = [];
     double a = 0, b = 0;
+    int c = 0, d = 0;
     for (int i = 0; i < parsedTable.length; i++) {
       left.add(parsedTable[i][1]);
       right.add(parsedTable[i][2]);
+      level.add(parsedTable[i][0]);
       a = closest(cp.floorToDouble(), left);
       b = closest(cp.floorToDouble(), right);
+      c = binarySearch(left, a);
+      d = binarySearch(right, b);
     }
-    return [a.toString(), b.toString()];
+    return [level[c].toString(), level[d].toString()];
   }
 }
 

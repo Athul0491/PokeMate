@@ -1,16 +1,12 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pokemate/bloc/database_bloc/database_bloc.dart';
 import 'package:pokemate/models/pokemon_common.dart';
 import 'package:pokemate/models/pokemon_pvp.dart';
 import 'package:pokemate/repositories/api_repository.dart';
 import 'package:pokemate/themes/theme_notifiers.dart';
-import 'package:pokemate/views/pvp_iv/pvp_rater_form.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pokemate/views/wild_pokemon/wild_pokemon_form.dart';
 
 class TestScreen extends StatefulWidget {
   const TestScreen({Key? key}) : super(key: key);
@@ -35,7 +31,7 @@ class _TestScreenState extends State<TestScreen> {
         padding: EdgeInsets.symmetric(horizontal: 25.w),
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(colors.bgImage), fit: BoxFit.cover),
+              image: AssetImage(colors.bgImagePath), fit: BoxFit.cover),
         ),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -95,63 +91,6 @@ class _TestScreenState extends State<TestScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  // chose image gallery
-  Future<File?> _imageFromGallery() async {
-    ImagePicker imagePicker = ImagePicker();
-    XFile? pickedFile =
-    await imagePicker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      File? image = File(pickedFile.path);
-      return image;
-    }
-  }
-
-  Widget _buildBottomCard(String targetPage) {
-    return Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            leading: const Icon(Icons.add_photo_alternate_outlined),
-            title: const Text('Gallery'),
-            onTap: () async {
-              File? image = await _imageFromGallery();
-              if (image != null) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => targetPage == 'PVPRater'
-                          ? PVPRaterForm(
-                        inputType: InputType.gallery,
-                        image: image,
-                      )
-                          : WildPokemonForm(
-                        inputType: InputType.gallery,
-                        image: image,
-                      ),
-                    ));
-              } else {
-                Navigator.pop(context);
-              }
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.edit),
-            title: const Text('Manual'),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const PVPRaterForm(
-                        inputType: InputType.manual,
-                      )));
-            },
-          ),
-        ],
       ),
     );
   }

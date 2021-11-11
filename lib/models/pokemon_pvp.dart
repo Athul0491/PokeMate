@@ -57,7 +57,7 @@ class PokemonPVP {
         multiplier: double.tryParse(multiplier)!,
       ));
     }
-    imageUrl = pokemonData['img'];
+    imageUrl = pokemonJSON.getImage(name);
     stats = (pokemonData['Stats'] as String).split(',');
     String perfStr = ivData['user_pokemon']['perfection'];
     userIVStats = IVStats(

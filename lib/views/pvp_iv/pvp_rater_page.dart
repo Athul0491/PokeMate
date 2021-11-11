@@ -29,9 +29,8 @@ class _PVPRaterPageState extends State<PVPRaterPage> {
   @override
   void initState() {
     super.initState();
-    context
-        .read<DatabaseBloc>()
-        .add(GetPVPInfoFromAPI(name: widget.name, ivs: widget.ivs, league: widget.league));
+    context.read<DatabaseBloc>().add(GetPVPInfoFromAPI(
+        name: widget.name, ivs: widget.ivs, league: widget.league));
   }
 
   @override
@@ -44,7 +43,7 @@ class _PVPRaterPageState extends State<PVPRaterPage> {
           padding: EdgeInsets.symmetric(horizontal: 25.w),
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(colors.bgImage),
+              image: AssetImage(colors.bgImagePath),
               fit: BoxFit.cover,
             ),
           ),
@@ -53,12 +52,17 @@ class _PVPRaterPageState extends State<PVPRaterPage> {
           child: BlocConsumer<DatabaseBloc, DatabaseState>(
             listener: (context, state) async {
               if (state is PVPRaterPageState) {
-                pokemon = state.pokemon;
+                if (state.pageState == PageState.success) {
+                  pokemon = state.pokemon!;
+                }
               }
             },
             builder: (context, state) {
-              if (state is Fetching) {
-                return const Center(child: LoadingSmall(size: 100));
+              if (state is PVPRaterPageState) {
+                if (state.pageState == PageState.loading) {
+                  return const Loading();
+                }
+                // TODO error handling
               }
               return Column(
                 children: [
