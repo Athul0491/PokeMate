@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pokemate/models/pokemon_pvp.dart';
 import 'package:pokemate/shared/shared_methods.dart';
-import 'package:pokemate/themes/theme_notifiers.dart';
-import 'package:provider/src/provider.dart';
 
 class PokemonType {
   final String name;
@@ -105,7 +103,6 @@ class PokemonTypeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.read<ThemeNotifier>();
     return SizedBox(
       height: 20.w,
       child: ListView.builder(

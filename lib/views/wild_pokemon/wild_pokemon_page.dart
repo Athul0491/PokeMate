@@ -5,7 +5,6 @@ import 'package:pokemate/bloc/database_bloc/database_bloc.dart';
 import 'package:pokemate/bloc/database_bloc/database_bloc_files.dart';
 import 'package:pokemate/models/pokemon_common.dart';
 import 'package:pokemate/models/wild_pokemon.dart';
-import 'package:pokemate/shared/custom_snackbar.dart';
 import 'package:pokemate/shared/custom_widgets.dart';
 import 'package:pokemate/shared/loading.dart';
 import 'package:pokemate/themes/theme_notifiers.dart';
