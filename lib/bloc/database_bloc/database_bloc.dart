@@ -169,7 +169,7 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
       var res = await apiRepository.getWildPokemonInfo(id);
       if (res != null) {
         WildPokemon pokemon =
-            WildPokemon.fromAPI(name: event.name, cp: event.cp, data: res);
+            WildPokemon.fromAPI(name: event.name, cp: event.cp, data: res, pokemonJSON: pokemonJSON);
         print(pokemon);
         emit(WildPokemonPageState(pokemon: pokemon, pageState: PageState.success));
       } else {
@@ -182,21 +182,47 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
 
   Future<void> _onGetMyPokemons(
       GetMyPokemons event, Emitter<DatabaseState> emit) async {
-    emit(const MyPokemonPageState(pageState: PageState.loading));
+    emit(const MyPokemonsPageState(pageState: PageState.loading));
     try {
       List<PokemonDB> list = await databaseRepository.getPokemons();
-      // emit()
+      emit(MyPokemonsPageState(pokemonList: list, pageState: PageState.success));
     } on Exception catch (_) {
-      emit(const MyPokemonPageState(pageState: PageState.loading));
+      emit(const MyPokemonsPageState(pageState: PageState.error));
     }
   }
 
   Future<void> _onAddPokemon(
-      AddPokemon event, Emitter<DatabaseState> emit) async {}
+      AddPokemon event, Emitter<DatabaseState> emit) async {
+    emit(const PokemonDBState(pageState: PageState.loading));
+    try {
+      PokemonDB pokemonDB = PokemonDB.fromPokemonPVP(event.pokemon);
+      await databaseRepository.addPokemon(pokemonDB);
+      print('Added to Database');
+      emit(const PokemonDBState(pageState: PageState.success));
+    } on Exception catch (_) {
+      emit(const PokemonDBState(pageState: PageState.error));
+    }
+  }
 
   Future<void> _onUpdatePokemon(
-      UpdatePokemon event, Emitter<DatabaseState> emit) async {}
+      UpdatePokemon event, Emitter<DatabaseState> emit) async {
+    emit(const PokemonDBState(pageState: PageState.loading));
+    try {
+      await databaseRepository.updatePokemon(event.pokemon);
+      emit(const PokemonDBState(pageState: PageState.success));
+    } on Exception catch (_) {
+      emit(const PokemonDBState(pageState: PageState.error));
+    }
+  }
 
   Future<void> _onDeletePokemon(
-      DeletePokemon event, Emitter<DatabaseState> emit) async {}
+      DeletePokemon event, Emitter<DatabaseState> emit) async {
+    emit(const PokemonDBState(pageState: PageState.loading));
+    try {
+      await databaseRepository.deletePokemon(event.pokemon);
+      emit(const PokemonDBState(pageState: PageState.success));
+    } on Exception catch (_) {
+      emit(const PokemonDBState(pageState: PageState.error));
+    }
+  }
 }

@@ -51,6 +51,15 @@ class PVPRaterPageState extends DatabaseState {
   List<Object?> get props => [pokemon, pageState];
 }
 
+class PokemonDBState extends DatabaseState {
+  final PageState pageState;
+
+  const PokemonDBState({required this.pageState});
+
+  @override
+  List<Object?> get props => [pageState];
+}
+
 class WildPokemonFormState extends DatabaseState {
   final String? name;
   final int? cp;
@@ -76,14 +85,14 @@ class WildPokemonPageState extends DatabaseState {
   List<Object?> get props => [pokemon, pageState];
 }
 
-class MyPokemonPageState extends DatabaseState {
-  final List<PokemonDB>? list;
+class MyPokemonsPageState extends DatabaseState {
+  final List<PokemonDB>? pokemonList;
   final PageState pageState;
 
-  const MyPokemonPageState({this.list, required this.pageState});
+  const MyPokemonsPageState({this.pokemonList, required this.pageState});
 
   @override
-  List<Object?> get props => [list, pageState];
+  List<Object?> get props => [pokemonList, pageState];
 }
 
 enum PageState { success, loading, error }

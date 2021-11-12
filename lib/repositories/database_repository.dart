@@ -63,11 +63,11 @@ class DatabaseRepository {
     await pokemonsRef.add(pokemon);
   }
 
-  Future<void> updatePokemon(PokemonDB pokemon, String oldPath) async {
+  Future<void> updatePokemon(PokemonDB pokemon) async {
     await pokemonsRef.doc(pokemon.id).set(pokemon);
   }
 
-  Future<void> deletePokemonDB(PokemonDB pokemon) async {
+  Future<void> deletePokemon(PokemonDB pokemon) async {
     await pokemonsRef.doc(pokemon.id).delete();
   }
 }

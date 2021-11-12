@@ -7,7 +7,7 @@ class TensorflowRepository {
     Tflite.close();
     try {
       String res = await Tflite.loadModel(
-        model: "assets/model.tflite",
+        model: "assets/model-pranav.tflite",
         labels: "assets/labels.txt",
       ) ??
           'Failed';
@@ -38,7 +38,7 @@ class TensorflowRepository {
       model: "SSDMobileNet",
       imageMean: 127.5,
       imageStd: 127.5,
-      threshold: 0.4,
+      threshold: 0.2,
       numResultsPerClass: 5,
       asynch: false,
     );

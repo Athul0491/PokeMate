@@ -48,9 +48,14 @@ class _SettingPageState extends State<SettingPage> {
               SizedBox(height: 7.w),
               _buildTile(colors, label: 'Edit Account', onTap: () {}),
               _buildTile(colors, label: 'Delete Account', onTap: () {}),
-              _buildTile(colors, label: 'Sign out', onTap: () {
-                context.read<AppBloc>().add(LoggedOut());
-              }),
+              _buildTile(
+                colors,
+                label: 'Sign out',
+                onTap: () {
+                  context.read<AppBloc>().add(LoggedOut());
+                  Navigator.pop(context);
+                },
+              ),
               SizedBox(height: 20.w),
               _buildCategoryHead(colors, 'About', Icons.info_outline),
               SizedBox(height: 7.w),

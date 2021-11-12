@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pokemate/models/pokemon_db.dart';
+import 'package:pokemate/models/pokemon_pvp.dart';
 
 abstract class DatabaseEvent extends Equatable {
   const DatabaseEvent();
@@ -69,7 +70,7 @@ class GetMyPokemons extends DatabaseEvent {
 }
 
 class AddPokemon extends DatabaseEvent {
-  final PokemonDB pokemon;
+  final PokemonPVP pokemon;
 
   const AddPokemon(this.pokemon);
 

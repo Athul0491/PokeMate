@@ -14,7 +14,7 @@ class ThemeNotifier with ChangeNotifier {
       isDarkMode ? const Color(0xFF1D1D1D) : const Color(0xFFF3F3F3);
 
   Color get card =>
-      isDarkMode ? const Color(0xFF363636) : const Color(0xFFFFFFFF);
+      isDarkMode ? const Color(0xFF303030) : const Color(0xFFFFFFFF);
 
   Color get t1 =>
       isDarkMode ? const Color(0xFFFFFFFF) : const Color(0xFF000000);

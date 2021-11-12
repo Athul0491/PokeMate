@@ -84,8 +84,9 @@ class PokemonPVP {
     List<PVPMatchUp> keyWins = [];
     print(pvpData);
     for (var matchUpData in pvpData['matchups']) {
+      String name = (matchUpData['opponent'] as String).split('_').first;
       keyWins.add(PVPMatchUp(
-        name: (matchUpData['opponent'] as String).capitalize(),
+        name: (matchUpData['opponent'] as String).replaceAll('_', ' ').capitalize(),
         rating: matchUpData['rating'],
         type: pokemonJSON.getTypes(name),
         imageUrl: pokemonJSON.getImage(name),
@@ -93,8 +94,9 @@ class PokemonPVP {
     }
     List<PVPMatchUp> keyLosses = [];
     for (var matchUpData in pvpData['counters']) {
+      String name = (matchUpData['opponent'] as String).split('_').first;
       keyLosses.add(PVPMatchUp(
-        name: (matchUpData['opponent'] as String).capitalize(),
+        name: (matchUpData['opponent'] as String).replaceAll('_', ' ').capitalize(),
         rating: matchUpData['rating'],
         type: pokemonJSON.getTypes(name),
         imageUrl: pokemonJSON.getImage(name),

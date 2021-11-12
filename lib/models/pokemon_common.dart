@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pokemate/models/pokemon_pvp.dart';
 import 'package:pokemate/shared/shared_methods.dart';
+import 'package:pokemate/themes/theme_notifiers.dart';
+import 'package:provider/src/provider.dart';
 
 class PokemonType {
   final String name;
@@ -30,7 +33,7 @@ class PokemonType {
   const PokemonType._(this.name, this.color);
 
   PokemonType(String name)
-      : color = colorMap[name] ?? Colors.red,
+      : color = colorMap[name.capitalize()] ?? Colors.red,
         name = name.capitalize();
 
   const PokemonType.empty() : this._('empty', Colors.red);
@@ -92,3 +95,47 @@ class PVPMovesJSON {
 }
 
 enum InputType { gallery, manual }
+
+class PokemonTypeList extends StatelessWidget {
+  final List<PokemonType> types;
+
+  const PokemonTypeList({
+    Key? key, required this.types,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.read<ThemeNotifier>();
+    return SizedBox(
+      height: 20.w,
+      child: ListView.builder(
+        primary: false,
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemCount: types.length,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (BuildContext context, int index) {
+          PokemonType type = types[index];
+          return Container(
+            height: 20.w,
+            alignment: Alignment.center,
+            padding: EdgeInsets.fromLTRB(12.w, 0, 12.w, 2.w),
+            margin: EdgeInsets.only(right: 8.w),
+            decoration: BoxDecoration(
+              color: type.color,
+              borderRadius: BorderRadius.circular(20.w),
+            ),
+            child: Text(
+              type.name,
+              style: const TextStyle(
+                fontSize: 13,
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}

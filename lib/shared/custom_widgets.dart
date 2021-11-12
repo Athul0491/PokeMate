@@ -116,14 +116,12 @@ InputDecoration customInputDecoration(
 }
 
 TextStyle formTextStyle(ThemeNotifier colors) => TextStyle(
-  fontSize: 18,
-  color: colors.t1,
-);
+      fontSize: 18,
+      color: colors.t1,
+    );
 
-TextStyle formTextStyle2(BuildContext context) => TextStyle(
-    fontSize: 18,
-    color: Theme.of(context).colorScheme.onSurface
-);
+TextStyle formTextStyle2(BuildContext context) =>
+    TextStyle(fontSize: 18, color: Theme.of(context).colorScheme.onSurface);
 
 class CustomElevatedButton extends StatelessWidget {
   final void Function()? onPressed;
@@ -136,15 +134,11 @@ class CustomElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.read<ThemeNotifier>();
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary:
-            style == 0 ? Theme.of(context).colorScheme.primary : Colors.white,
+        primary: style == 0 ? colors.accent : Colors.white,
         shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: Theme.of(context).colorScheme.primary,
-            width: 2,
-          ),
           borderRadius: BorderRadius.circular(12.w),
         ),
       ),
@@ -154,7 +148,9 @@ class CustomElevatedButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-              color: style == 0 ?Theme.of(context).colorScheme.onPrimary: Theme.of(context).colorScheme.primary,
+              color: style == 0
+                  ? colors.onAccent
+                  : colors.t3,
               fontSize: 19,
               fontWeight: FontWeight.w600),
         ),
@@ -175,10 +171,9 @@ class CustomBackButton extends StatelessWidget {
       iconSize: 32.w,
       color: colors.accent,
       icon: const Icon(Icons.arrow_back_ios_rounded),
-      onPressed: (){
+      onPressed: () {
         Navigator.pop(context);
       },
     );
   }
 }
-

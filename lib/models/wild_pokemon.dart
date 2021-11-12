@@ -23,6 +23,7 @@ class WildPokemon {
     required this.name,
     required this.cp,
     required Map<String, dynamic> data,
+    required PokemonJSON pokemonJSON,
   }) {
     types = [];
     for (int i = 0; i < (data['Types'] as List).length; i++) {
@@ -48,7 +49,7 @@ class WildPokemon {
         multiplier: double.tryParse(multiplier)!,
       ));
     }
-    imageUrl = data['img'];
+    imageUrl = pokemonJSON.getImage(name);
     String capRate = data['rates']['capture rate'];
     captureRate =
         double.tryParse(capRate.substring(0, capRate.length - 2)) ?? 0;
@@ -148,48 +149,3 @@ class WildPokemon {
   }
 }
 
-var res = {
-  "Resistant": [
-    {"multiplier": "39.1%", "name": "bug"},
-    {"multiplier": "62.5%", "name": "fairy"},
-    {"multiplier": "62.5%", "name": "fighting"},
-    {"multiplier": "62.5%", "name": "fire"},
-    {"multiplier": "39.1%", "name": "grass"},
-    {"multiplier": "62.5%", "name": "ground"},
-    {"multiplier": "62.5%", "name": "steel"}
-  ],
-  "Types": [
-    {"0": "Fire"},
-    {"1": "Flying"}
-  ],
-  "Vulnerable": [
-    {"multiplier": "160%", "name": "electric"},
-    {"multiplier": "256%", "name": "rock"},
-    {"multiplier": "160%", "name": "water"}
-  ],
-  "img":
-      "https://gamepress.gg//pokemongo/sites/pokemongo/files/styles/240w/public/2018-01/pokemon_icon_006_00.png?itok=cPIsdKn6",
-  "rates": {"capture rate": "5.0 %", "flee rate": "5.0 %"},
-  "table": [
-    ["Level", "Min CP", "Max CP"],
-    ["1", "35", "40"],
-    ["1.5", "73", "84"],
-    ["2", "110", "128"],
-    ["2.5", "148", "171"],
-    ["3", "186", "215"],
-    ["3.5", "223", "258"],
-    ["4", "261", "302"],
-    ["4.5", "299", "346"],
-    ["5", "336", "389"],
-    ["5.5", "374", "433"],
-    ["6", "412", "476"],
-    ["6.5", "450", "520"],
-    ["7", "487", "564"],
-    ["7.5", "525", "607"],
-    ["8", "563", "651"],
-    ["8.5", "600", "695"],
-    ["9", "638", "738"],
-    ["9.5", "676", "782"],
-    ["10", "714", "825"],
-  ]
-};
