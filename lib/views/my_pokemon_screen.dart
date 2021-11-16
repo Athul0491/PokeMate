@@ -72,18 +72,32 @@ class _MyPokemonsPageState extends State<MyPokemonsPage> {
                       ),
                     ),
                     SizedBox(height: 30.w),
-                    Flexible(
-                      child: ListView.builder(
-                        primary: false,
-                        shrinkWrap: true,
-                        itemCount: pokemonList.length,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          PokemonDB pokemon = pokemonList[index];
-                          return _buildPokemonCard(colors, pokemon);
-                        },
-                      ),
-                    ),
+                    pokemonList.isEmpty
+                        ? Padding(
+                          padding: EdgeInsets.only(top: 250.h),
+                          child: Center(
+                            child: Text(
+                              'You have not added any Pokemons yet,\nPlease add from the PVPRater Section!',
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: colors.t2,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )
+                        : Flexible(
+                            child: ListView.builder(
+                              primary: false,
+                              shrinkWrap: true,
+                              itemCount: pokemonList.length,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) {
+                                PokemonDB pokemon = pokemonList[index];
+                                return _buildPokemonCard(colors, pokemon);
+                              },
+                            ),
+                          ),
                   ],
                 ),
               ),

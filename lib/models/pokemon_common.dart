@@ -113,21 +113,28 @@ class PokemonTypeList extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           PokemonType type = types[index];
-          return Container(
-            height: 20.w,
-            alignment: Alignment.center,
-            padding: EdgeInsets.fromLTRB(12.w, 0, 12.w, 2.w),
-            margin: EdgeInsets.only(right: 8.w),
-            decoration: BoxDecoration(
-              color: type.color,
+          return Padding(
+            padding: EdgeInsets.only(right: 8.w),
+            child: Material(
+              elevation: 3,
               borderRadius: BorderRadius.circular(20.w),
-            ),
-            child: Text(
-              type.name,
-              style: const TextStyle(
-                fontSize: 13,
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              child: Container(
+                height: 20.w,
+                alignment: Alignment.center,
+                padding: EdgeInsets.fromLTRB(12.w, 0, 12.w, 2.w),
+                decoration: BoxDecoration(
+                  color: type.color,
+                  borderRadius: BorderRadius.circular(20.w),
+                ),
+                child: Text(
+                  type.name,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ),
           );

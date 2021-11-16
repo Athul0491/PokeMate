@@ -137,6 +137,7 @@ class CustomElevatedButton extends StatelessWidget {
     final colors = context.read<ThemeNotifier>();
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        elevation: 4,
         primary: style == 0 ? colors.accent : Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.w),
@@ -150,7 +151,7 @@ class CustomElevatedButton extends StatelessWidget {
           style: TextStyle(
               color: style == 0
                   ? colors.onAccent
-                  : colors.t3,
+                  : Colors.black,
               fontSize: 19,
               fontWeight: FontWeight.w600),
         ),

@@ -102,49 +102,59 @@ class _WildPokemonFormState extends State<WildPokemonForm> {
                           ),
                           SizedBox(height: 40.h),
                           _buildLabel(colors, 'Name'),
-                          TextFormField(
-                            initialValue: _name,
-                            decoration: customInputDecoration(
-                                context: context, labelText: 'Eg. Charizard'),
-                            style: formTextStyle(colors),
-                            onSaved: (value) {
-                              _name = value ?? '';
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Please enter Pokemon's name";
-                              }
-                            },
+                          Material(
+                            elevation: 4,
+                            borderRadius: BorderRadius.circular(15.w),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: TextFormField(
+                              initialValue: _name,
+                              decoration: customInputDecoration(
+                                  context: context, labelText: 'Eg. Charizard'),
+                              style: formTextStyle(colors),
+                              onSaved: (value) {
+                                _name = value ?? '';
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter Pokemon's name";
+                                }
+                              },
+                            ),
                           ),
                           SizedBox(height: 20.h),
                           _buildLabel(colors, 'CP'),
-                          TextFormField(
-                            initialValue: _inputType == InputType.gallery
-                                ? _cp.toString()
-                                : '',
-                            keyboardType: TextInputType.number,
-                            decoration: customInputDecoration(
-                                context: context, labelText: '0'),
-                            style: formTextStyle(colors),
-                            onSaved: (value) {
-                              _cp = int.tryParse(value!) ?? 0;
-                            },
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Please enter pokemon's cp";
-                              }
-                              if (int.tryParse(value) == null) {
-                                return "Invalid";
-                              }
-                              if (int.tryParse(value)! > 10000) {
-                                return "Cannot be more than 10,000";
-                              }
-                              if (int.tryParse(value)! < 0) {
-                                return "Cannot be negative";
-                              }
-                            },
+                          Material(
+                            elevation: 4,
+                            borderRadius: BorderRadius.circular(15.w),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: TextFormField(
+                              initialValue: _inputType == InputType.gallery
+                                  ? _cp.toString()
+                                  : '',
+                              keyboardType: TextInputType.number,
+                              decoration: customInputDecoration(
+                                  context: context, labelText: '0'),
+                              style: formTextStyle(colors),
+                              onSaved: (value) {
+                                _cp = int.tryParse(value!) ?? 0;
+                              },
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter pokemon's cp";
+                                }
+                                if (int.tryParse(value) == null) {
+                                  return "Invalid";
+                                }
+                                if (int.tryParse(value)! > 10000) {
+                                  return "Cannot be more than 10,000";
+                                }
+                                if (int.tryParse(value)! < 0) {
+                                  return "Cannot be negative";
+                                }
+                              },
+                            ),
                           ),
                           SizedBox(height: 30.h),
                           CustomElevatedButton(

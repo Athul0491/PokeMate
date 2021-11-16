@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemate/bloc/app_bloc/app_bloc_files.dart';
 import 'package:pokemate/bloc/app_bloc/app_events.dart';
 import 'package:pokemate/bloc/app_bloc/app_states.dart';
+import 'package:pokemate/bloc/database_bloc/database_bloc_files.dart';
 import 'package:pokemate/models/custom_exceptions.dart';
 import 'package:pokemate/models/user.dart';
 import 'package:pokemate/repositories/auth_repository.dart';
@@ -13,7 +14,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final AuthRepository _authRepository;
   late DatabaseRepository _databaseRepository;
   late UserData userData;
-  // late DatabaseBloc databaseBloc;
+  late DatabaseBloc databaseBloc;
 
   AppBloc({required authRepository})
       : _authRepository = authRepository,
@@ -27,21 +28,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<UpdateUserData>(_onUpdateUserData);
     on<LoggedOut>(_onLoggedOut);
   }
-
-  // void updateDatabaseBloc() {
-  //   print('isSame?');
-  //   print(databaseBloc ==
-  //       DatabaseBloc(
-  //         userData: userData,
-  //         databaseRepository: databaseRepository,
-  //         encryptionRepository: encryptionRepository,
-  //       ));
-  //   databaseBloc = DatabaseBloc(
-  //     userData: userData,
-  //     databaseRepository: databaseRepository,
-  //     encryptionRepository: encryptionRepository,
-  //   );
-  // }
 
   // When the App Starts
   FutureOr<void> _onAppStarted(AppStarted event, Emitter<AppState> emit) async {

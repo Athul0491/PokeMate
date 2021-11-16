@@ -74,7 +74,7 @@ class _SignupPageState extends State<SignupPage> {
                     children: [
                       SizedBox(height: 25.w),
                       const CustomBackButton(),
-                      SizedBox(height: 55.h),
+                      SizedBox(height: 70.h),
                       Text(
                         'Welcome to,',
                         style: TextStyle(
@@ -93,7 +93,7 @@ class _SignupPageState extends State<SignupPage> {
                           color: Theme.of(context).colorScheme.onBackground,
                         ),
                       ),
-                      SizedBox(height: 45.h),
+                      SizedBox(height: 60.h),
                       Text(
                         'Create an account',
                         style: TextStyle(
@@ -106,43 +106,48 @@ class _SignupPageState extends State<SignupPage> {
                       SizedBox(height: 25.h),
                       Stack(
                         children: [
-                          TextFormField(
-                            decoration: emailStatus == EmailStatus.valid
-                                ? customInputDecoration(
-                                        context: context, labelText: 'Email')
-                                    .copyWith(
-                                    enabledBorder: greenBorder,
-                                    focusedBorder: greenBorder,
-                                  )
-                                : customInputDecoration(
-                                    context: context, labelText: 'Email'),
-                            style: formTextStyle(colors),
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your email';
-                              }
-                              if (!validateEmail(email)) {
-                                return 'Invalid email format';
-                              }
-                              if (emailStatus == EmailStatus.invalid) {
-                                return 'This email is already taken!';
-                              }
-                            },
-                            onChanged: (value) {
-                              setState(() {
-                                email = value;
-                              });
-                              if (value.isNotEmpty && validateEmail(email)) {
-                                context
-                                    .read<AppBloc>()
-                                    .add(CheckEmailStatus(email: value));
-                              } else {
+                          Material(
+                            elevation: 4,
+                            borderRadius: BorderRadius.circular(15.w),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: TextFormField(
+                              decoration: emailStatus == EmailStatus.valid
+                                  ? customInputDecoration(
+                                          context: context, labelText: 'Email')
+                                      .copyWith(
+                                      enabledBorder: greenBorder,
+                                      focusedBorder: greenBorder,
+                                    )
+                                  : customInputDecoration(
+                                      context: context, labelText: 'Email'),
+                              style: formTextStyle(colors),
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your email';
+                                }
+                                if (!validateEmail(email)) {
+                                  return 'Invalid email format';
+                                }
+                                if (emailStatus == EmailStatus.invalid) {
+                                  return 'This email is already taken!';
+                                }
+                              },
+                              onChanged: (value) {
                                 setState(() {
-                                  emailStatus = EmailStatus.invalid;
+                                  email = value;
                                 });
-                              }
-                            },
+                                if (value.isNotEmpty && validateEmail(email)) {
+                                  context
+                                      .read<AppBloc>()
+                                      .add(CheckEmailStatus(email: value));
+                                } else {
+                                  setState(() {
+                                    emailStatus = EmailStatus.invalid;
+                                  });
+                                }
+                              },
+                            ),
                           ),
                           Container(
                             padding: EdgeInsets.only(right: 15.w),
@@ -169,25 +174,35 @@ class _SignupPageState extends State<SignupPage> {
                       SizedBox(height: 20.w),
                       Stack(
                         children: [
-                          TextFormField(
-                            decoration: customInputDecoration(
-                                context: context, labelText: 'Password'),
-                            style: formTextStyle(colors),
-                            obscureText: !showPassword,
-                            onChanged: (value) {
-                              setState(() {
-                                password = value;
-                              });
-                            },
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your password';
-                              }
-                              if(value.length<8){
-                                return 'Minimum 8 characters';
-                              }
-                            },
+                          Material(
+                            elevation: 4,
+                            borderRadius: BorderRadius.circular(15.w),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: Material(
+                              elevation: 4,
+                              borderRadius: BorderRadius.circular(15.w),
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              child: TextFormField(
+                                decoration: customInputDecoration(
+                                    context: context, labelText: 'Password'),
+                                style: formTextStyle(colors),
+                                obscureText: !showPassword,
+                                onChanged: (value) {
+                                  setState(() {
+                                    password = value;
+                                  });
+                                },
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your password';
+                                  }
+                                  if(value.length<8){
+                                    return 'Minimum 8 characters';
+                                  }
+                                },
+                              ),
+                            ),
                           ),
                           Container(
                             padding: EdgeInsets.only(right: 10.w),
@@ -211,20 +226,25 @@ class _SignupPageState extends State<SignupPage> {
                       SizedBox(height: 20.w),
                       Stack(
                         children: [
-                          TextFormField(
-                            decoration: customInputDecoration(
-                                context: context, labelText: 'Confirm Password'),
-                            style: formTextStyle(colors),
-                            obscureText: !showConfirmPassword,
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please re-enter your password';
-                              }
-                              if (value != password) {
-                                return 'Passwords do not match!';
-                              }
-                            },
+                          Material(
+                            elevation: 4,
+                            borderRadius: BorderRadius.circular(15.w),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: TextFormField(
+                              decoration: customInputDecoration(
+                                  context: context, labelText: 'Confirm Password'),
+                              style: formTextStyle(colors),
+                              obscureText: !showConfirmPassword,
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please re-enter your password';
+                                }
+                                if (value != password) {
+                                  return 'Passwords do not match!';
+                                }
+                              },
+                            ),
                           ),
                           Container(
                             padding: EdgeInsets.only(right: 10.w),
@@ -263,31 +283,32 @@ class _SignupPageState extends State<SignupPage> {
                           ));
                         },
                       ),
-                      SizedBox(height: 70.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Don't have an account?",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).colorScheme.onSurface),
-                          ),
-                          TextButton(
-                            child: Text(
-                              "Sign Up!",
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Don't have an account?",
                               style: TextStyle(
                                   fontSize: 16,
-                                  color: colors.accent),
+                                  color: Theme.of(context).colorScheme.onSurface),
                             ),
-                            onPressed: () {
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                      const LoginPage()));
-                            },
-                          ),
-                        ],
+                            TextButton(
+                              child: Text(
+                                "Sign Up!",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: colors.accent),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        const LoginPage()));
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

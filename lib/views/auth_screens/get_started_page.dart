@@ -42,7 +42,7 @@ class _GetStartedPageState extends State<GetStartedPage> {
                 children: [
                   SizedBox(height: 25.w),
                   const CustomBackButton(),
-                  SizedBox(height: 70.h),
+                  SizedBox(height: 90.h),
                   Text(
                     'Welcome to,',
                     style: TextStyle(
@@ -61,7 +61,7 @@ class _GetStartedPageState extends State<GetStartedPage> {
                       color: Theme.of(context).colorScheme.onBackground,
                     ),
                   ),
-                  SizedBox(height: 60.h),
+                  SizedBox(height: 75.h),
                   Text(
                     "Let's get started",
                     style: TextStyle(
@@ -72,33 +72,51 @@ class _GetStartedPageState extends State<GetStartedPage> {
                     ),
                   ),
                   SizedBox(height: 25.h),
-                  TextFormField(
-                    decoration: customInputDecoration(
-                        context: context, labelText: 'Name'),
-                    style: formTextStyle(colors),
-                    onSaved: (value) {
-                      name = value ?? '';
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your name';
-                      }
-                    },
+                  Material(
+                    elevation: 4,
+                    borderRadius: BorderRadius.circular(15.w),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: TextFormField(
+                      decoration: customInputDecoration(
+                          context: context, labelText: 'Name'),
+                      style: formTextStyle(colors),
+                      onSaved: (value) {
+                        name = value ?? '';
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your name';
+                        }
+                      },
+                    ),
                   ),
                   SizedBox(height: 20.w),
-                  TextFormField(
-                    decoration: customInputDecoration(
-                        context: context, labelText: 'Age'),
-                    style: formTextStyle(colors),
-                    keyboardType: TextInputType.number,
-                    onSaved: (value) {
-                      age = int.tryParse(value ?? '') ?? 18;
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your age';
-                      }
-                    },
+                  Material(
+                    elevation: 4,
+                    borderRadius: BorderRadius.circular(15.w),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: TextFormField(
+                      decoration: customInputDecoration(
+                          context: context, labelText: 'Age'),
+                      style: formTextStyle(colors),
+                      keyboardType: TextInputType.number,
+                      onSaved: (value) {
+                        age = int.tryParse(value ?? '') ?? 18;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your age!';
+                        }
+                        if (int.tryParse(value) == null) {
+                          return "Invalid!";
+                        }
+                        if (int.tryParse(value)! > 100 ||
+                            int.tryParse(value)! < 0) {
+                          return "Please enter valid age!";
+                        }
+                      },
+                    ),
                   ),
                   SizedBox(height: 25.w),
                   CustomElevatedButton(
@@ -115,28 +133,29 @@ class _GetStartedPageState extends State<GetStartedPage> {
                                   SignupPage(name: name, age: age)));
                     },
                   ),
-                  SizedBox(height: 95.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Already have an account?",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Theme.of(context).colorScheme.onSurface),
-                      ),
-                      TextButton(
-                        child: Text(
-                          "Login!",
-                          style: TextStyle(fontSize: 16, color: colors.accent),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Already have an account?",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Theme.of(context).colorScheme.onSurface),
                         ),
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginPage()));
-                        },
-                      ),
-                    ],
+                        TextButton(
+                          child: Text(
+                            "Login!",
+                            style: TextStyle(fontSize: 16, color: colors.accent),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginPage()));
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

@@ -102,19 +102,24 @@ class _PVPRaterFormState extends State<PVPRaterForm> {
                     ),
                     SizedBox(height: 40.h),
                     _buildLabel(colors, 'Name'),
-                    TextFormField(
-                      initialValue: _name,
-                      decoration: customInputDecoration(
-                          context: context, labelText: 'Eg. Charizard'),
-                      style: formTextStyle(colors),
-                      onSaved: (value) {
-                        _name = value ?? '';
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please enter Pokemon's name";
-                        }
-                      },
+                    Material(
+                      elevation: 4,
+                      borderRadius: BorderRadius.circular(15.w),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: TextFormField(
+                        initialValue: _name,
+                        decoration: customInputDecoration(
+                            context: context, labelText: 'Eg. Charizard'),
+                        style: formTextStyle(colors),
+                        onSaved: (value) {
+                          _name = value ?? '';
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter Pokemon's name";
+                          }
+                        },
+                      ),
                     ),
                     SizedBox(height: 20.h),
                     Row(
@@ -125,31 +130,36 @@ class _PVPRaterFormState extends State<PVPRaterForm> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               _buildLabel(colors, 'Atk'),
-                              TextFormField(
-                                initialValue: _inputType == InputType.gallery
-                                    ? _ivs[0].toString()
-                                    : '',
-                                keyboardType: TextInputType.number,
-                                decoration: customInputDecoration(
-                                    context: context, labelText: '0'),
-                                style: formTextStyle(colors),
-                                onSaved: (value) {
-                                  _ivs[0] = int.tryParse(value!) ?? 0;
-                                },
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "Cannot\nbe empty";
-                                  }
-                                  if (int.tryParse(value) == null) {
-                                    return "Invalid";
-                                  }
-                                  if (int.tryParse(value)! > 15 ||
-                                      int.tryParse(value)! < 0) {
-                                    return "Between\n0 - 15";
-                                  }
-                                },
+                              Material(
+                                elevation: 4,
+                                borderRadius: BorderRadius.circular(15.w),
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                child: TextFormField(
+                                  initialValue: _inputType == InputType.gallery
+                                      ? _ivs[0].toString()
+                                      : '',
+                                  keyboardType: TextInputType.number,
+                                  decoration: customInputDecoration(
+                                      context: context, labelText: '0'),
+                                  style: formTextStyle(colors),
+                                  onSaved: (value) {
+                                    _ivs[0] = int.tryParse(value!) ?? 0;
+                                  },
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "Cannot\nbe empty";
+                                    }
+                                    if (int.tryParse(value) == null) {
+                                      return "Invalid";
+                                    }
+                                    if (int.tryParse(value)! > 15 ||
+                                        int.tryParse(value)! < 0) {
+                                      return "Between\n0 - 15";
+                                    }
+                                  },
+                                ),
                               ),
                             ],
                           ),
@@ -160,31 +170,36 @@ class _PVPRaterFormState extends State<PVPRaterForm> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               _buildLabel(colors, 'Def'),
-                              TextFormField(
-                                initialValue: _inputType == InputType.gallery
-                                    ? _ivs[1].toString()
-                                    : '',
-                                keyboardType: TextInputType.number,
-                                decoration: customInputDecoration(
-                                    context: context, labelText: '0'),
-                                style: formTextStyle(colors),
-                                onSaved: (value) {
-                                  _ivs[1] = int.tryParse(value!) ?? 0;
-                                },
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "Cannot\nbe empty";
-                                  }
-                                  if (int.tryParse(value) == null) {
-                                    return "Invalid";
-                                  }
-                                  if (int.tryParse(value)! > 15 ||
-                                      int.tryParse(value)! < 0) {
-                                    return "Between\n0 - 15";
-                                  }
-                                },
+                              Material(
+                                elevation: 4,
+                                borderRadius: BorderRadius.circular(15.w),
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                child: TextFormField(
+                                  initialValue: _inputType == InputType.gallery
+                                      ? _ivs[1].toString()
+                                      : '',
+                                  keyboardType: TextInputType.number,
+                                  decoration: customInputDecoration(
+                                      context: context, labelText: '0'),
+                                  style: formTextStyle(colors),
+                                  onSaved: (value) {
+                                    _ivs[1] = int.tryParse(value!) ?? 0;
+                                  },
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "Cannot\nbe empty";
+                                    }
+                                    if (int.tryParse(value) == null) {
+                                      return "Invalid";
+                                    }
+                                    if (int.tryParse(value)! > 15 ||
+                                        int.tryParse(value)! < 0) {
+                                      return "Between\n0 - 15";
+                                    }
+                                  },
+                                ),
                               ),
                             ],
                           ),
@@ -195,31 +210,36 @@ class _PVPRaterFormState extends State<PVPRaterForm> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               _buildLabel(colors, 'HP'),
-                              TextFormField(
-                                initialValue: _inputType == InputType.gallery
-                                    ? _ivs[2].toString()
-                                    : '',
-                                keyboardType: TextInputType.number,
-                                decoration: customInputDecoration(
-                                    context: context, labelText: '0'),
-                                style: formTextStyle(colors),
-                                onSaved: (value) {
-                                  _ivs[2] = int.tryParse(value!) ?? 0;
-                                },
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "Cannot\nbe empty";
-                                  }
-                                  if (int.tryParse(value) == null) {
-                                    return "Invalid";
-                                  }
-                                  if (int.tryParse(value)! > 15 ||
-                                      int.tryParse(value)! < 0) {
-                                    return "Between\n0 - 15";
-                                  }
-                                },
+                              Material(
+                                elevation: 4,
+                                borderRadius: BorderRadius.circular(15.w),
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                child: TextFormField(
+                                  initialValue: _inputType == InputType.gallery
+                                      ? _ivs[2].toString()
+                                      : '',
+                                  keyboardType: TextInputType.number,
+                                  decoration: customInputDecoration(
+                                      context: context, labelText: '0'),
+                                  style: formTextStyle(colors),
+                                  onSaved: (value) {
+                                    _ivs[2] = int.tryParse(value!) ?? 0;
+                                  },
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "Cannot\nbe empty";
+                                    }
+                                    if (int.tryParse(value) == null) {
+                                      return "Invalid";
+                                    }
+                                    if (int.tryParse(value)! > 15 ||
+                                        int.tryParse(value)! < 0) {
+                                      return "Between\n0 - 15";
+                                    }
+                                  },
+                                ),
                               ),
                             ],
                           ),
@@ -275,12 +295,13 @@ class _PVPRaterFormState extends State<PVPRaterForm> {
           });
         },
         child: Card(
+          elevation: 4,
           color: colors.card,
           margin: EdgeInsets.only(bottom: 15.w),
           shape: RoundedRectangleBorder(
               side: league == _league
                   ? BorderSide(width: 3.w, color: colors.accent)
-                  : const BorderSide(width: 0),
+                  : const BorderSide(width: 0, color: Colors.transparent),
               borderRadius: BorderRadius.circular(20.w)),
           child: Container(
             // height: 80.w,

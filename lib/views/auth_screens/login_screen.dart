@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       SizedBox(height: 25.w),
                       const CustomBackButton(),
-                      SizedBox(height: 75.h),
+                      SizedBox(height: 90.h),
                       Text(
                         'Welcome to,',
                         style: TextStyle(
@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                           color: Theme.of(context).colorScheme.onBackground,
                         ),
                       ),
-                      SizedBox(height: 60.h),
+                      SizedBox(height: 75.h),
                       Text(
                         'Login to continue',
                         style: TextStyle(
@@ -91,38 +91,48 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       SizedBox(height: 25.h),
-                      TextFormField(
-                        decoration:
-                        customInputDecoration(context: context, labelText: 'Email'),
-                        style: formTextStyle(colors),
-                        onSaved: (value) {
-                          email = value ?? '';
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          // if (!AuthEmail(value).isValid) {
-                          //   return 'Invalid email format';
-                          // }
-                        },
+                      Material(
+                        elevation: 4,
+                        borderRadius: BorderRadius.circular(15.w),
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        child: TextFormField(
+                          decoration:
+                          customInputDecoration(context: context, labelText: 'Email'),
+                          style: formTextStyle(colors),
+                          onSaved: (value) {
+                            email = value ?? '';
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your email';
+                            }
+                            if (!validateEmail(email)) {
+                              return 'Invalid email format';
+                            }
+                          },
+                        ),
                       ),
                       SizedBox(height: 20.w),
                       Stack(
                         children: [
-                          TextFormField(
-                            decoration: customInputDecoration(
-                                context: context, labelText: 'Password'),
-                            style: formTextStyle(colors),
-                            obscureText: !showPassword,
-                            onSaved: (value) {
-                              password = value ?? '';
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your password';
-                              }
-                            },
+                          Material(
+                            elevation: 4,
+                            borderRadius: BorderRadius.circular(15.w),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: TextFormField(
+                              decoration: customInputDecoration(
+                                  context: context, labelText: 'Password'),
+                              style: formTextStyle(colors),
+                              obscureText: !showPassword,
+                              onSaved: (value) {
+                                password = value ?? '';
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your password';
+                                }
+                              },
+                            ),
                           ),
                           Container(
                             padding: EdgeInsets.only(right: 10.w),
@@ -157,31 +167,32 @@ class _LoginPageState extends State<LoginPage> {
                               .add(LoginUser(email: email, password: password));
                         },
                       ),
-                      SizedBox(height: 95.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Don't have an account?",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).colorScheme.onSurface),
-                          ),
-                          TextButton(
-                            child: Text(
-                              "Sign Up!",
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Don't have an account?",
                               style: TextStyle(
                                   fontSize: 16,
-                                  color: colors.accent),
+                                  color: Theme.of(context).colorScheme.onSurface),
                             ),
-                            onPressed: () {
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const GetStartedPage()));
-                            },
-                          ),
-                        ],
+                            TextButton(
+                              child: Text(
+                                "Sign Up!",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: colors.accent),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const GetStartedPage()));
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -192,5 +203,12 @@ class _LoginPageState extends State<LoginPage> {
         );
       },
     );
+  }
+
+  bool validateEmail(String email) {
+    String pattern =
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+    RegExp regExp = RegExp(pattern);
+    return regExp.hasMatch(email);
   }
 }

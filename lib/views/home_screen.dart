@@ -66,108 +66,119 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(image: colors.bgImage),
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 25.w),
-                          Container(
-                            alignment: Alignment.centerRight,
-                            child: IconButton(
-                              iconSize: 35.w,
-                              color: colors.accent,
-                              icon: const Icon(Icons.settings_outlined),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SettingPage()));
-                              },
-                            ),
-                          ),
-                          SizedBox(height: 20.w),
-                          Text(
-                            'Welcome back,',
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.w300,
-                              color: colors.t2,
-                              height: 0.9,
-                            ),
-                          ),
-                          Text(
-                            userData.name!.split(' ').first,
-                            style: TextStyle(
-                              height: 1.25,
-                              fontSize: 45,
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.onBackground,
-                            ),
-                          ),
-                          SizedBox(height: 25.w),
-                          _buildPVPRaterButton(context, colors),
-                          SizedBox(height: 15.w),
-                          _buildWildPokemonButton(context, colors),
-                          SizedBox(height: 15.w),
-                          _buildMyPokemonButton(context, colors),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 30.w),
-                    Card(
-                      elevation: 5,
+              child: Stack(
+                children: [
+                  Container(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
                       color: colors.bg2,
-                      margin: EdgeInsets.only(bottom: 15.w),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(30.w))),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.symmetric(horizontal: 20.w),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 20.w),
-                            Padding(
-                              padding: EdgeInsets.only(left: 10.w),
-                              child: Text(
-                                'Raid Bosses',
-                                style: TextStyle(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w500,
-                                  color: colors.t1,
+                      height: 250.w,
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.w),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 25.w),
+                              Container(
+                                alignment: Alignment.centerRight,
+                                child: IconButton(
+                                  iconSize: 35.w,
+                                  color: colors.accent,
+                                  icon: const Icon(Icons.settings_outlined),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SettingPage()));
+                                  },
                                 ),
                               ),
-                            ),
-                            SizedBox(height: 15.w),
-                            Flexible(
-                              child: ListView.builder(
-                                primary: false,
-                                shrinkWrap: true,
-                                itemCount: raidBossList.length,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (BuildContext context, int index) {
-                                  RaidBoss raidBoss = raidBossList[index];
-                                  return _buildRaidBossCard(colors, raidBoss);
-                                },
+                              SizedBox(height: 20.w),
+                              Text(
+                                'Welcome back,',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w300,
+                                  color: colors.t2,
+                                  height: 0.9,
+                                ),
                               ),
-                            )
-                          ],
+                              Text(
+                                userData.name!.split(' ').first,
+                                style: TextStyle(
+                                  height: 1.25,
+                                  fontSize: 45,
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).colorScheme.onBackground,
+                                ),
+                              ),
+                              SizedBox(height: 25.w),
+                              _buildPVPRaterButton(context, colors),
+                              SizedBox(height: 15.w),
+                              _buildWildPokemonButton(context, colors),
+                              SizedBox(height: 15.w),
+                              _buildMyPokemonButton(context, colors),
+                            ],
+                          ),
                         ),
-                      ),
+                        SizedBox(height: 30.w),
+                        Card(
+                          elevation: 0,
+                          color: colors.bg2,
+                          margin: EdgeInsets.zero,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(30.w))),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(horizontal: 20.w),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 20.w),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 10.w),
+                                  child: Text(
+                                    'Raid Bosses',
+                                    style: TextStyle(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w500,
+                                      color: colors.t1,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 15.w),
+                                Flexible(
+                                  child: ListView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    itemCount: raidBossList.length,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    itemBuilder: (BuildContext context, int index) {
+                                      RaidBoss raidBoss = raidBossList[index];
+                                      return _buildRaidBossCard(colors, raidBoss);
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             );
           },
