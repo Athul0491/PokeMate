@@ -12,39 +12,45 @@ class OCRRepository {
     pickImage = img.contrast(pickImage, 132);
     File file = File(path);
     if (pickImage != null) {
+      // Write the processed image to original file path
       file.writeAsBytesSync(img.encodePng(pickImage));
     }
     return file;
   }
 
-  void writeImage(File file) {}
-
   // Using TesseractOCR to extract name for PVP Rater
   Future<String> extractPokemonName(String path) async {
-    String extractText = await FlutterTesseractOcr.extractText(path);
-    extractText = extractText.replaceAll("\n", " ");
-    var list = extractText.split(' ');
+    // Run OCR on image
+    String extractTexted = await FlutterTesseractOcr.extractText(path);
+    extractTexted = extractTexted.replaceAll("\n", " ");
+    var list = extractTexted.split(' ');
     String name = list[list.indexOf('This') + 1];
     return name;
   }
 
   // Using TesseractOCR to extract name and CP for Wild Pokemon
   Future<Map<String, dynamic>> extractNameAndCP(String path) async {
-    String extractText = await FlutterTesseractOcr.extractText(path);
-    extractText = extractText.replaceAll("\n", " ");
-    print(extractText);
-    return extractNameAndCPFromText(extractText);
+    // Run OCR on image
+    String extractedText = await FlutterTesseractOcr.extractText(path);
+    extractedText = extractedText.replaceAll("\n", " ");
+    print(extractedText);
+    return extractNameAndCPFromText(extractedText);
   }
 
   Map<String, dynamic> extractNameAndCPFromText(String text) {
     List textList = text.split(' ');
+    // Look for cp in text
     final cpRegex = RegExp(r'(?:cp.*)');
     for (String str in textList) {
       if (cpRegex.hasMatch(str)) {
+        // Check if the rest is numbers
         final numRegex = RegExp(r'(?=.*[0-9])');
         if (numRegex.hasMatch(str)) {
           Map<String, dynamic> data = {
+            // Remove 'cp' so that only actual value(int) is left
             'cp': str.substring(2),
+            // Eg: Pikachu / cp259
+            // So name is 2 indices before cp
             'name': textList[textList.indexOf(str) - 2],
           };
           return data;
@@ -52,28 +58,5 @@ class OCRRepository {
       }
     }
     return {};
-  }
-
-  String extractCPFromTextOld(String text) {
-    List textList = text.split(' ');
-    if (textList.contains('/')) {
-      int slashIndex = textList.indexOf('/');
-      if (slashIndex > 0) {
-        String name = textList[slashIndex - 1];
-        String cp = '';
-        final cpRegex = RegExp(r'(?:cp.*)');
-        for (String str in textList) {
-          if (cpRegex.hasMatch(str)) {
-            final numRegex = RegExp(r'(?=.*[0-9])');
-            if (numRegex.hasMatch(str)) {
-              cp = str;
-            }
-          }
-        }
-        print(name);
-        return name + ' ' + cp;
-      }
-    }
-    return 'Does not exist';
   }
 }
